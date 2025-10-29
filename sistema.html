@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Sistema — Juntos por Todos</title>
+  <meta name="description" content="Painel por persona: Administrador, Voluntário, Doador/Apoiador e Visitante"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html"><img src="img/logo.svg" alt="Logotipo Juntos por Todos"/></a>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="projetos.html">Projetos</a></li>
+          <li><a href="cadastro.html">Cadastro</a></li>
+          <li><a href="sistema.html" aria-current="page">Sistema</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" class="container">
+    <section class="hero hero-small"><div><h1>Sistema — Áreas por Perfil</h1><p class="lead">Acesse as funcionalidades de acordo com seu perfil.</p></div><img class="hero-img" src="img/hero-projetos.svg" alt="Painel do sistema" loading="lazy"/></section>
+    <section class="dashboards">
+      <div class="tabs" role="tablist" aria-label="Perfis de usuário">
+        <button class="tab active" role="tab" aria-selected="true" aria-controls="pane-admin" id="tb-admin">Administrador</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="pane-vol" id="tb-vol">Voluntário</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="pane-doador" id="tb-doador">Doador/Apoiador</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="pane-visit" id="tb-visit">Visitante</button>
+      </div>
+      <section id="pane-admin" class="tab-panel" role="tabpanel" aria-labelledby="tb-admin">
+        <h3>Administrador</h3>
+        <article class="card">
+          <h4>Acesso Administrativo</h4>
+          <form id="adminLogin" class="form-inline" aria-describedby="admin-help">
+            <label for="adminUser">Usuário</label><input id="adminUser" value="admin"/>
+            <label for="adminPass">Senha</label><input id="adminPass" type="password" placeholder="admin"/>
+            <button type="button" class="btn btn-primary" id="btnAdminLogin">Entrar</button>
+            <small id="admin-help">Dica: usuário <b>admin</b> / senha <b>admin</b> (simulação)</small>
+          </form>
+        </article>
+        <div id="adminArea" class="hidden">
+          <div class="grid-2">
+            <article class="card">
+              <h4>Informações Institucionais</h4>
+              <form id="formInstitucionalSist">
+                <label for="i-missao">Missão</label><textarea id="i-missao" rows="2"></textarea>
+                <label for="i-visao">Visão</label><textarea id="i-visao" rows="2"></textarea>
+                <button type="button" class="btn btn-primary" id="btnSalvarInst">Salvar</button>
+              </form>
+            </article>
+            <article class="card">
+              <h4>Projetos — Cadastro/Edição</h4>
+              <form id="formProjetoSist">
+                <input type="hidden" id="p-id"/>
+                <label for="p-nome-s">Nome</label><input id="p-nome-s" required/>
+                <label for="p-cat-s">Categoria</label><select id="p-cat-s"><option value="educacao">Educação</option><option value="saude">Saúde</option><option value="capacitacao">Capacitação</option></select>
+                <label for="p-meta-s">Meta (R$)</label><input id="p-meta-s" type="number" min="0" step="100"/>
+                <div class="row-actions"><button type="button" class="btn btn-primary" id="btnSalvarProjeto">Salvar/Atualizar</button><button type="reset" class="btn" id="btnLimparProjeto">Limpar</button></div>
+              </form>
+            </article>
+          </div>
+          <article class="card">
+            <h4>Projetos Cadastrados</h4>
+            <table class="table" id="tblProjetos"><thead><tr><th>Nome</th><th>Categoria</th><th>Meta (R$)</th><th>Ações</th></tr></thead><tbody></tbody></table>
+          </article>
+          <div class="grid-2">
+            <article class="card">
+              <h4>Voluntários — Inscrições</h4>
+              <table class="table" id="tblInscricoes"><thead><tr><th>Nome</th><th>Projeto</th><th>Status</th><th>Ação</th></tr></thead><tbody></tbody></table>
+            </article>
+            <article class="card">
+              <h4>Doações</h4>
+              <table class="table" id="tblDoacoes"><thead><tr><th>Data</th><th>Projeto</th><th>Doador</th><th>Valor (R$)</th></tr></thead><tbody></tbody></table>
+              <p><b>Total arrecadado:</b> R$ <span id="totalArrecadado">0,00</span></p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="pane-vol" class="tab-panel hidden" role="tabpanel" aria-labelledby="tb-vol">
+        <h3>Voluntário</h3>
+        <article class="card">
+          <h4>Procurar Oportunidades</h4>
+          <form id="formCandidatura">
+            <label for="v-nome">Seu nome</label><input id="v-nome" required/>
+            <label for="v-projeto">Projeto</label><select id="v-projeto"></select>
+            <button type="submit" class="btn btn-primary">Candidatar-se</button>
+          </form>
+        </article>
+        <div class="grid-2">
+          <article class="card">
+            <h4>Meu Histórico</h4>
+            <table class="table" id="tblHistorico"><thead><tr><th>Projeto</th><th>Status</th><th>Data</th></tr></thead><tbody></tbody></table>
+          </article>
+          <article class="card">
+            <h4>Certificado</h4>
+            <label for="cert-projeto">Projeto</label><select id="cert-projeto"></select>
+            <button type="button" class="btn" id="btnCertificado">Gerar Certificado</button>
+          </article>
+        </div>
+      </section>
+      <section id="pane-doador" class="tab-panel hidden" role="tabpanel" aria-labelledby="tb-doador">
+        <h3>Doador/Apoiador</h3>
+        <div class="grid-2">
+          <article class="card">
+            <h4>Doar</h4>
+            <form id="formDoacaoSist">
+              <label for="d-projeto-s">Projeto</label><select id="d-projeto-s"></select>
+              <label for="d-nome-s">Seu nome</label><input id="d-nome-s"/>
+              <label for="d-valor-s">Valor (R$)</label><input id="d-valor-s" type="number" min="10" step="10"/>
+              <button type="button" class="btn btn-primary" id="btnDoarSist">Doar (simulação)</button>
+            </form>
+          </article>
+          <article class="card">
+            <h4>Minhas Doações</h4>
+            <table class="table" id="tblMinhasDoacoes"><thead><tr><th>Data</th><th>Projeto</th><th>Valor</th></tr></thead><tbody></tbody></table>
+            <p><b>Total doado:</b> R$ <span id="totalDoador">0,00</span></p>
+          </article>
+        </div>
+      </section>
+      <section id="pane-visit" class="tab-panel hidden" role="tabpanel" aria-labelledby="tb-visit">
+        <h3>Visitante</h3>
+        <div class="grid-2">
+          <article class="card"><h4>Conheça a Organização</h4><p>Veja missão, histórico, equipe e relatórios na página inicial.</p><p><a class="btn" href="index.html">Ir para Início</a></p></article>
+          <article class="card">
+            <h4>Galeria</h4>
+            <div class="gallery">
+              <figure><img src="img/hero-projetos.svg" alt="Oficina de leitura"/><figcaption>Oficina de leitura</figcaption></figure>
+              <figure><img src="img/hero-index.svg" alt="Mutirão de saúde"/><figcaption>Mutirão de saúde</figcaption></figure>
+              <figure><img src="img/hero-cadastro.svg" alt="Capacitação tech"/><figcaption>Capacitação tech</figcaption></figure>
+            </div>
+          </article>
+        </div>
+        <article class="card"><h4>Compartilhar</h4><div class="share"><a class="btn" href="#" aria-label="WhatsApp">WhatsApp</a><a class="btn" href="#" aria-label="Facebook">Facebook</a><a class="btn" href="#" aria-label="X/Twitter">X/Twitter</a></div></article>
+      </section>
+    </section>
+  </main>
+  <footer><div class="container"><p>© 2025 Juntos por Todos</p></div></footer>
+  <script src="js/scripts.js"></script>
+</body>
+</html>

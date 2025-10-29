@@ -1,5 +1,38 @@
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Projetos — Juntos por Todos</title><link rel="stylesheet" href="css/styles.css"></head>
-<body><header class="site-header"><div class="container header-inner"><a href="index.html" class="logo"><img src="img/logo.png" alt="Logotipo Juntos por Todos"></a><nav class="main-nav"><ul class="nav-list"><li><a href="index.html">Início</a></li><li><a href="projetos.html" class="active">Projetos</a></li><li><a href="cadastro.html">Cadastro</a></li></ul></nav></div></header>
-<main class="container"><h1>Projetos</h1><article class="projeto-card"><h3>Projeto Alfabetização</h3><p>Impacto estimado: 200 beneficiados/ano.</p><p><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a></p></article></main><footer><p>© 2025 Juntos por Todos</p></footer><script src="js/scripts.js"></script></body></html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Projetos — Juntos por Todos</title>
+  <meta name="description" content="Projetos sociais, voluntariado e doações"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html"><img src="img/logo.svg" alt="Logotipo Juntos por Todos"/></a>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <ul class="nav-list"><li><a href="index.html">Início</a></li><li><a href="projetos.html" aria-current="page">Projetos</a></li><li><a href="cadastro.html">Cadastro</a></li><li><a href="sistema.html">Sistema</a></li></ul>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" class="container">
+    <section class="hero hero-small"><div><h1>Projetos e Oportunidades</h1><p class="lead">Use os filtros para encontrar um projeto.</p></div><img class="hero-img" src="img/hero-projetos.svg" alt="Projetos" loading="lazy"/></section>
+    <section class="search-and-filters">
+      <form id="filtroForm" class="filtro-form" role="search">
+        <label for="q">Buscar</label><input id="q" name="q" placeholder="Palavra-chave (ex.: educação, saúde)"/>
+        <label for="categoria">Categoria</label><select id="categoria" name="categoria"><option value="">Todas</option><option value="educacao">Educação</option><option value="saude">Saúde</option><option value="capacitacao">Capacitação</option></select>
+        <button type="button" id="btnFiltrar" class="btn">Filtrar</button>
+      </form>
+    </section>
+    <section class="projetos-list">
+      <article class="projeto-card" data-categoria="educacao"><header><h3>Projeto Alfabetização</h3></header><p>Alfabetização de adultos.</p><p><small>Meta: R$ 20.000 | Arrecadado: <span class="meta" data-meta="50">50%</span></small></p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><div class="bar" style="width:50%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a> <a class="btn" href="sistema.html#pane-doador">Doar</a></footer></article>
+      <article class="projeto-card" data-categoria="saude"><header><h3>Projeto Saúde Comunitária</h3></header><p>Prevenção e campanhas.</p><p><small>Meta: R$ 35.000 | Arrecadado: <span class="meta" data-meta="30">30%</span></small></p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30"><div class="bar" style="width:30%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a> <a class="btn" href="sistema.html#pane-doador">Doar</a></footer></article>
+      <article class="projeto-card" data-categoria="capacitacao"><header><h3>Projeto Tecendo Futuro</h3></header><p>Capacitação tech para jovens.</p><p><small>Meta: R$ 25.000 | Arrecadado: <span class="meta" data-meta="65">65%</span></small></p><div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="65"><div class="bar" style="width:65%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a></footer></article>
+    </section>
+  </main>
+  <footer><div class="container"><p>© 2025 Juntos por Todos</p></div></footer>
+  <script src="js/scripts.js"></script>
+</body>
+</html>

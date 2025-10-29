@@ -1,21 +1,61 @@
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Juntos por Todos — Missão</title><link rel="stylesheet" href="css/styles.css"></head>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Juntos por Todos — Plataforma para ONGs</title>
+  <meta name="description" content="Plataforma profissional para ONGs: projetos, doações, voluntariado e transparência."/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
 <body>
-  <a class="skip-link" href="#main">Ir para o conteúdo</a>
-  <header class="site-header"><div class="container header-inner"><a href="index.html" class="logo"><img src="img/logo.png" alt="Logotipo Juntos por Todos"></a>
-  <nav class="main-nav" aria-label="Navegação"><ul class="nav-list"><li><a href="index.html">Início</a></li><li><a href="projetos.html">Projetos</a></li><li><a href="cadastro.html">Cadastro</a></li></ul></nav></div></header>
-  <main id="main" class="container" role="main">
-    <section class="hero" aria-labelledby="h1"><h1 id="h1">Juntos por Todos — Plataforma de Impacto Social</h1><p class="lead">Conectamos ONGs, voluntários e doadores.</p></section>
-    <section><h2>Personas e Casos de Uso</h2>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html"><img src="img/logo.svg" alt="Logotipo Juntos por Todos"/></a>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="index.html" aria-current="page">Início</a></li>
+          <li><a href="projetos.html">Projetos</a></li>
+          <li><a href="cadastro.html">Cadastro</a></li>
+          <li><a href="sistema.html">Sistema</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" class="container" role="main">
+    <section class="hero" aria-labelledby="h-hero">
+      <div class="hero-content">
+        <h1 id="h-hero">Juntos por Todos</h1>
+        <p class="lead">Plataforma para ONGs gerenciarem atividades, divulgarem projetos, captarem recursos e engajarem voluntários.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="projetos.html">Ver Projetos</a>
+          <a class="btn" href="cadastro.html">Quero Ajudar</a>
+        </div>
+      </div>
+      <img class="hero-img" src="img/hero-index.svg" alt="Voluntários em ação" loading="lazy"/>
+    </section>
+
+    <section class="institucional" aria-labelledby="h-inst">
+      <h2 id="h-inst">Missão, Visão e Valores</h2>
       <div class="cards-grid">
-        <article class="card"><h3>Administrador</h3><ul><li>Gerenciar informações institucionais</li><li>Cadastrar projetos</li></ul></article>
-        <article class="card"><h3>Voluntário</h3><ul><li>Descobrir oportunidades</li><li>Candidatar-se</li></ul></article>
-        <article class="card"><h3>Doador</h3><ul><li>Doar on-line</li><li>Acompanhar relatórios</li></ul></article>
-        <article class="card"><h3>Visitante</h3><ul><li>Conhecer a ONG</li><li>Visualizar galeria</li></ul></article>
-      </div></section>
-    <section><h2>Funcionalidades Principais</h2><div class="features-grid"><article class="feature-card"><h3>Área institucional</h3></article><article class="feature-card"><h3>Gestão de projetos</h3></article></div></section>
+        <article class="card"><h3>Missão</h3><p>Promover inclusão e desenvolvimento social.</p></article>
+        <article class="card"><h3>Visão</h3><p>Ser referência em impacto social e transparência.</p></article>
+        <article class="card"><h3>Valores</h3><ul><li>Transparência</li><li>Inclusão</li><li>Colaboração</li><li>Ética</li></ul></article>
+      </div>
+    </section>
+
+    <section class="institucional-extend" aria-labelledby="h-institucional-extend">
+      <h2 id="h-institucional-extend">Histórico, Equipe e Transparência</h2>
+      <div class="cards-grid">
+        <article class="card" id="historia"><h3>Histórico & Conquistas</h3><p>Desde 2015, atuamos em educação, saúde e empregabilidade. Mais de <strong>8.000</strong> atendimentos diretos.</p></article>
+        <article class="card" id="equipe"><h3>Equipe & Estrutura</h3><ul class="checklist"><li>Diretoria: Ana (Exec.), Carlos (Financeiro)</li><li>Projetos: Maria, Joana</li><li>Voluntariado: Pedro</li></ul></article>
+        <article class="card" id="transparencia"><h3>Relatórios de Transparência</h3><ul><li><a href="#" download>Relatório Anual 2024 (PDF)</a></li><li><a href="#" download>Prestação de Contas — Alfabetização (PDF)</a></li><li><a href="#" download>Auditoria Independente (PDF)</a></li></ul></article>
+      </div>
+    </section>
+
   </main>
-  <footer><p>© 2025 Juntos por Todos</p></footer>
+  <footer><div class="container"><p>© 2025 Juntos por Todos</p></div></footer>
   <script src="js/scripts.js"></script>
-</body></html>
+</body>
+</html>
