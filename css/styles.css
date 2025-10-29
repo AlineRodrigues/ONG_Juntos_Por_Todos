@@ -1,0 +1,4 @@
+/* CSS institucional - versão aprimorada (resumido) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto&display=swap');
+:root{--azul-primario:#1e88e5;--azul-escuro:#0f4c81;--cinza-claro:#f5f7fa;--texto:#21313a;--radius:12px}
+*{box-sizing:border-box}body{font-family:Roboto,system-ui; margin:0; background:var(--cinza-claro); color:var(--texto)}.container{width:90%;max-width:1100px;margin:0 auto;padding:1rem}.site-header{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.06);position:sticky;top:0}.logo img{height:56px}.main-nav .nav-list{list-style:none;display:flex;gap:1rem}.btn-primary{background:linear-gradient(135deg,var(--azul-primario),var(--azul-escuro));color:#fff;padding:0.6rem 1rem;border-radius:8px;border:none}form{background:#fff;padding:1rem;border-radius:10px;margin:1rem 0}input,select{width:100%;padding:0.6rem;margin-top:0.4rem;border:1px solid #d6e6f6;border-radius:8px}
