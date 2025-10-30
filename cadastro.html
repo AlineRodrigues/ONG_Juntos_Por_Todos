@@ -12,8 +12,15 @@
 <a class="skip-link" href="#formulario">Ir para o formulário</a>
 <header class="site-header">
 <div class="container header-inner">
-<a class="logo" href="index.html"><img alt="Logotipo Juntos por Todos" src="img/logo.png"/></a>
-<nav aria-label="Navegação principal" class="main-nav"><ul class="nav-list"><li><a href="index.html">Início</a></li><li><a href="projetos.html">Projetos</a></li><li><a aria-current="page" href="cadastro.html">Cadastro</a></li><li><a href="sistema.html">Usuários</a></li></ul></nav>
+<a class="logo" href="index.html"><img alt="Logotipo Juntos por Todos" src="img/logo.svg"/></a>
+<button class="hamburger" id="btnHamburger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav aria-label="Navegação principal" class="main-nav"><ul class="nav-list"><li><a href="index.html">Início</a></li><li class="nav-item"><a href="projetos.html" aria-haspopup="true" aria-expanded="false">Projetos</a>
+  <div class="submenu" role="menu">
+    <a href="projetos.html#educacao" role="menuitem">Educação</a>
+    <a href="projetos.html#saude" role="menuitem">Saúde</a>
+    <a href="projetos.html#capacitacao" role="menuitem">Capacitação</a>
+  </div>
+</li><li><a aria-current="page" href="cadastro.html">Cadastro</a></li><li><a href="sistema.html">Sistema</a></li></ul></nav>
 </div>
 </header>
 <main class="container" role="main">
@@ -44,5 +51,7 @@
 </main>
 <footer><div class="container"><p>© 2025 Juntos por Todos</p></div></footer>
 <script src="js/scripts.js"></script>
+<div id="toastRoot" class="toast" role="status" aria-live="polite"></div>
+<div class="modal-backdrop" id="modalRoot" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">Confirmação</h3><p id="modalMsg">Ação realizada com sucesso.</p><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;"><button class="btn" id="modalClose">Fechar</button></div></div></div>
 </body>
 </html>

@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function(){
     panels.forEach(p=>{ p.classList.toggle('hidden', p.id !== id.replace('tb-','pane-')); });
   }
   tabs.forEach(t=>t.addEventListener('click', ()=>activate(t.id)));
-  if(tabs.length) activate('tb-vol');
+  if(tabs.length) activate('tb-admin');
 
   // Storage helpers
   const S = {
@@ -236,3 +236,90 @@ document.addEventListener('DOMContentLoaded', function(){
   }
   renderMinhasDoacoes();
 })();
+
+
+document.addEventListener('DOMContentLoaded', function(){
+  const burger = document.getElementById('btnHamburger');
+  const navList = document.querySelector('.nav-list');
+  if(burger && navList){
+    burger.addEventListener('click', ()=>{
+      const open = navList.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  const navItem = document.querySelector('.nav-item');
+  if(navItem){
+    const trigger = navItem.querySelector('a');
+    if(trigger){
+      trigger.addEventListener('click', (e)=>{
+        e.preventDefault();
+        navItem.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', navItem.classList.contains('open') ? 'true':'false');
+      });
+    }
+    navItem.addEventListener('mouseenter', ()=>navItem.classList.add('open'));
+    navItem.addEventListener('mouseleave', ()=>navItem.classList.remove('open'));
+  }
+  // Validation visuals
+  document.querySelectorAll('form').forEach(f=>{
+    f.addEventListener('submit', ()=>{
+      Array.from(f.elements).forEach(el=>{
+        if(el.willValidate){
+          el.classList.toggle('is-invalid', !el.checkValidity());
+          el.classList.toggle('is-valid', el.checkValidity());
+        }
+      });
+    });
+    f.querySelectorAll('input,select,textarea').forEach(el=>{
+      el.addEventListener('blur', ()=>{
+        if(el.willValidate){
+          el.classList.toggle('is-invalid', !el.checkValidity());
+          el.classList.toggle('is-valid', el.checkValidity());
+        }
+      });
+    });
+  });
+  // Toast / Modal helpers
+  const toastRoot = document.getElementById('toastRoot');
+  window.showToast = (msg)=>{
+    if(!toastRoot) return;
+    toastRoot.textContent = msg || 'Ação concluída.';
+    toastRoot.classList.add('show');
+    setTimeout(()=>toastRoot.classList.remove('show'), 2800);
+  };
+  const modalRoot = document.getElementById('modalRoot');
+  const modalClose = document.getElementById('modalClose');
+  window.showModal = (title, message)=>{
+    if(!modalRoot) return;
+    if(title) modalRoot.querySelector('#modalTitle').textContent = title;
+    if(message) modalRoot.querySelector('#modalMsg').textContent = message;
+    modalRoot.classList.add('open');
+    modalRoot.setAttribute('aria-hidden', 'false');
+  };
+  const closeModal = ()=>{
+    modalRoot?.classList.remove('open');
+    modalRoot?.setAttribute('aria-hidden', 'true');
+  };
+  modalClose?.addEventListener('click', closeModal);
+  modalRoot?.addEventListener('click', (e)=>{ if(e.target === modalRoot) closeModal(); });
+
+  // Hook: show feedback on simulated actions if elements exist
+  document.getElementById('btnSalvarProjeto')?.addEventListener('click', ()=>setTimeout(()=>showToast('Projeto salvo/atualizado.'), 250));
+  document.getElementById('btnDoarSist')?.addEventListener('click', ()=>setTimeout(()=>showModal('Obrigado!', 'Doação registrada (simulação).'), 300));
+});
+
+
+// Auto-select "Interesse" from URL
+document.addEventListener('DOMContentLoaded', function(){
+  try{
+    const params = new URLSearchParams(window.location.search);
+    const interesse = params.get('interesse');
+    const select = document.querySelector('select[name="interesse"]');
+    if(select && interesse){ select.value = interesse; }
+  }catch(e){}
+  // Keep dropdown accessible on keyboard
+  document.querySelectorAll('.nav-item > a').forEach(a=>{
+    a.addEventListener('focus', ()=> a.parentElement?.classList.add('open'));
+    a.addEventListener('blur', ()=> a.parentElement?.classList.remove('open'));
+  });
+});

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="56" viewBox="0 0 220 56">
+  <defs><style>
+    .a{fill:#7B1FA2;font-family:Arial,Helvetica,sans-serif;font-weight:700}
+    .b{fill:#FF7043}
+  </style></defs>
+  <g>
+    <circle cx="28" cy="28" r="20" fill="#7B1FA2" opacity="0.15"/>
+    <path class="b" d="M18 28c0-5.5 4.5-10 10-10s10 4.5 10 10h-6a4 4 0 0 0-8 0h-6z"/>
+    <path fill="#7B1FA2" d="M18 30h6a4 4 0 0 0 8 0h6a10 10 0 0 1-20 0z"/>
+  </g>
+  <text class="a" x="56" y="36">Juntos por Todos</text>
+</svg>
