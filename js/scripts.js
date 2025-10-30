@@ -26,28 +26,103 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   const form=document.getElementById('cadastroForm');
-  if(form){
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      let valid=true;
-      document.querySelectorAll('.error').forEach(el=>el.textContent='');
-      if(!form.checkValidity()){
-        Array.from(form.elements).forEach(el=>{
-          if(el.willValidate && !el.checkValidity()){
-            const slot=document.getElementById(el.id+'-error');
-            if(slot) slot.textContent=el.validationMessage;
-            valid=false;
-          }
-        });
-      }
-      const cpfEl=document.getElementById('cpf');
-      if(cpfEl){ const d=cpfEl.value.replace(/\D/g,''); if(d.length!==11){ const s=document.getElementById('cpf-error'); if(s) s.textContent='CPF inválido (11 dígitos).'; valid=false; } }
-      if(valid){
-        const payload=Object.fromEntries(new FormData(form).entries());
-        try{ localStorage.setItem('cadastro_jpt', JSON.stringify(payload)); alert('Cadastro enviado! (simulado)'); form.reset(); } catch{};
+if(form){
+
+  // Torna todos os campos obrigatórios no carregamento
+  form.querySelectorAll('input, select, textarea').forEach(el=>{
+    el.setAttribute('required','required');
+  });
+
+  // Funções auxiliares para validar CPF
+  function somenteDigitos(str){
+    return (str||'').replace(/\D/g,'');
+  }
+
+  function cpfEhValido(strCPF){
+    const cpf=somenteDigitos(strCPF);
+    if(cpf.length!==11) return false;
+    if(/^(\d)\1+$/.test(cpf)) return false;
+
+    let soma=0;
+    for(let i=0;i<9;i++){
+      soma+=parseInt(cpf[i],10)*(10-i);
+    }
+    let resto=soma%11;
+    const dig1=(resto<2)?0:(11-resto);
+
+    soma=0;
+    for(let i=0;i<10;i++){
+      soma+=parseInt(cpf[i],10)*(11-i);
+    }
+    resto=soma%11;
+    const dig2=(resto<2)?0:(11-resto);
+
+    return (dig1===parseInt(cpf[9],10) && dig2===parseInt(cpf[10],10));
+  }
+
+  const campoCPF=document.getElementById('cpf');
+  if(campoCPF){
+    campoCPF.addEventListener('blur', function(){
+      const slotCPF=document.getElementById('cpf-error');
+      if(!cpfEhValido(campoCPF.value)){
+        if(slotCPF){ slotCPF.textContent='CPF inválido. Confira os dígitos.'; }
+        campoCPF.dataset.valid='false';
+      } else {
+        if(slotCPF){ slotCPF.textContent=''; }
+        campoCPF.dataset.valid='true';
       }
     });
   }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid=true;
+
+    // limpa mensagens anteriores
+    document.querySelectorAll('.error').forEach(el=>el.textContent='');
+
+    // 1. Campos vazios
+    form.querySelectorAll('input, select, textarea').forEach(el=>{
+      const valor=(el.value||'').trim();
+      const slot=document.getElementById(el.id+'-error');
+      if(valor===''){
+        if(slot){ slot.textContent='Preencha este campo.'; }
+        valid=false;
+      }
+    });
+
+    // 2. CEP precisa ter 8 dígitos
+    const cepEl=document.getElementById('cep');
+    if(cepEl){
+      const onlyCep=(cepEl.value||'').replace(/\D/g,'');
+      if(onlyCep.length!==8){
+        const slotCep=document.getElementById('cep-error');
+        if(slotCep){ slotCep.textContent='CEP inválido. Use 8 dígitos.'; }
+        valid=false;
+      }
+    }
+
+    // 3. CPF válido (dígitos verificadores)
+    if(campoCPF && !cpfEhValido(campoCPF.value)){
+      const slotCPF=document.getElementById('cpf-error');
+      if(slotCPF){ slotCPF.textContent='CPF inválido. Confira os dígitos.'; }
+      valid=false;
+    }
+
+    if(valid){
+      // monta o payload para simular envio
+      const payload=Object.fromEntries(new FormData(form).entries());
+      try{
+        localStorage.setItem('cadastro_jpt', JSON.stringify(payload));
+        alert('Cadastro enviado! (simulado)');
+        form.reset();
+      }catch(_){
+        alert('Cadastro enviado! (simulado)');
+        form.reset();
+      }
+    }
+  });
+}
 });
 
 // ====== Sistema (abas e interações completas) ======
