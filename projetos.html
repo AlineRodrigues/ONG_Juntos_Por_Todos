@@ -11,13 +11,36 @@
 <body>
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <header class="site-header">
-<div class="container header-inner">
-<a class="logo" href="index.html"><img alt="Logotipo Juntos por Todos" src="img/logo.svg"/></a>
-<button class="hamburger" id="btnHamburger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
-<nav aria-label="Navegação principal" class="main-nav">
-<ul class="nav-list"><li><a href="index.html">Início</a></li><li><a aria-current="page" href="projetos.html">Projetos</a></li><li><a href="cadastro.html">Cadastro</a></li><li><a href="sistema.html">Sistema</a></li></ul>
-</nav>
-</div>
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img src="img/logo.png" alt="Logotipo Juntos por Todos"/>
+    </a>
+
+    <button class="nav-toggle" aria-expanded="false" aria-label="Abrir menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html">Início</a></li>
+        <li class="nav-item"><a href="projetos.html">Projetos</a></li>
+        <li class="nav-item"><a href="cadastro.html">Cadastro</a></li>
+        <li class="nav-item nav-has-dropdown">
+          <button class="nav-link-with-dropdown" aria-haspopup="true" aria-expanded="false">
+            Usuários <span class="chevron"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="sistema.html#pane-vol">Voluntário</a></li>
+            <li><a href="sistema.html#pane-doador">Doador/Apoiador</a></li>
+            <li><a href="sistema.html#pane-visit">Visitante</a></li>
+            <li><a href="sistema.html#pane-admin">Administrador</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </header>
 <main class="container" id="conteudo">
 <section class="hero hero-small"><div><h1>Projetos e Oportunidades</h1><p class="lead">Use os filtros para encontrar um projeto.</p></div><img alt="Projetos" class="hero-img" loading="lazy" src="img/hero-projetos.svg"/></section>
@@ -29,14 +52,12 @@
 </form>
 </section>
 <section class="projetos-list">
-<article class="projeto-card" data-categoria="educacao"><header><h3>Projeto Alfabetização <span class="badge">Educação</span></h3></header><p>Alfabetização de adultos.</p><p><small>Meta: R$ 20.000 | Arrecadado: <span class="meta" data-meta="50">50%</span></small></p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress" role="progressbar"><div class="bar" style="width:50%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a> <a class="btn" href="cadastro.html#formulario">Doar</a></footer></article>
-<article class="projeto-card" data-categoria="saude"><header><h3>Projeto Saúde Comunitária <span class="badge warn">Saúde</span></h3></header><p>Prevenção e campanhas.</p><p><small>Meta: R$ 35.000 | Arrecadado: <span class="meta" data-meta="30">30%</span></small></p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="progress" role="progressbar"><div class="bar" style="width:30%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a> <a class="btn" href="cadastro.html#formulario">Doar</a></footer></article>
-<article class="projeto-card" data-categoria="capacitacao"><header><h3>Projeto Tecendo Futuro <span class="badge ok">Capacitação</span></h3></header><p>Capacitação tech para jovens.</p><p><small>Meta: R$ 25.000 | Arrecadado: <span class="meta" data-meta="65">65%</span></small></p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress" role="progressbar"><div class="bar" style="width:65%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a> <a class="btn" href="cadastro.html#formulario">Doar</a></footer></article>
+<article class="projeto-card" data-categoria="educacao"><header><h3>Projeto Alfabetização</h3></header><p>Alfabetização de adultos.</p><p><small>Meta: R$ 20.000 | Arrecadado: <span class="meta" data-meta="50">50%</span></small></p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" class="progress" role="progressbar"><div class="bar" style="width:50%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a> <a class="btn" href="cadastro.html#formulario">Doar</a></footer></article>
+<article class="projeto-card" data-categoria="saude"><header><h3>Projeto Saúde Comunitária</h3></header><p>Prevenção e campanhas.</p><p><small>Meta: R$ 35.000 | Arrecadado: <span class="meta" data-meta="30">30%</span></small></p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="30" class="progress" role="progressbar"><div class="bar" style="width:30%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a> <a class="btn" href="cadastro.html#formulario">Doar</a></footer></article>
+<article class="projeto-card" data-categoria="capacitacao"><header><h3>Projeto Tecendo Futuro</h3></header><p>Capacitação tech para jovens.</p><p><small>Meta: R$ 25.000 | Arrecadado: <span class="meta" data-meta="65">65%</span></small></p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress" role="progressbar"><div class="bar" style="width:65%"></div></div><footer><a class="btn btn-primary" href="cadastro.html">Candidatar-se</a> <a class="btn" href="cadastro.html#formulario">Doar</a></footer></article>
 </section>
 </main>
 <footer><div class="container"><p>© 2025 Juntos por Todos</p></div></footer>
 <script src="js/scripts.js"></script>
-<div id="toastRoot" class="toast" role="status" aria-live="polite"></div>
-<div class="modal-backdrop" id="modalRoot" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">Confirmação</h3><p id="modalMsg">Ação realizada com sucesso.</p><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;"><button class="btn" id="modalClose">Fechar</button></div></div></div>
 </body>
 </html>

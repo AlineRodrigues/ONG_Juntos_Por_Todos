@@ -8,29 +8,40 @@
 <meta content="Plataforma profissional para ONGs: projetos, doações, voluntariado e transparência." name="description"/>
 <meta content="index,follow" name="robots"/>
 <link href="css/styles.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <header class="site-header">
-<div class="container header-inner">
-<a class="logo" href="index.html"><img alt="Logotipo Juntos por Todos" src="img/logo.svg"/></a>
-<button class="hamburger" id="btnHamburger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
-<nav aria-label="Navegação principal" class="main-nav">
-<ul class="nav-list">
-<li><a aria-current="page" href="index.html">Início</a></li>
-<li class="nav-item"><a href="projetos.html" aria-haspopup="true" aria-expanded="false">Projetos</a>
-  <div class="submenu" role="menu">
-    <a href="projetos.html#educacao" role="menuitem">Educação</a>
-    <a href="projetos.html#saude" role="menuitem">Saúde</a>
-    <a href="projetos.html#capacitacao" role="menuitem">Capacitação</a>
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img src="img/logo.png" alt="Logotipo Juntos por Todos"/>
+    </a>
+
+    <button class="nav-toggle" aria-expanded="false" aria-label="Abrir menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html">Início</a></li>
+        <li class="nav-item"><a href="projetos.html">Projetos</a></li>
+        <li class="nav-item"><a href="cadastro.html">Cadastro</a></li>
+        <li class="nav-item nav-has-dropdown">
+          <button class="nav-link-with-dropdown" aria-haspopup="true" aria-expanded="false">
+            Usuários <span class="chevron"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="sistema.html#pane-vol">Voluntário</a></li>
+            <li><a href="sistema.html#pane-doador">Doador/Apoiador</a></li>
+            <li><a href="sistema.html#pane-visit">Visitante</a></li>
+            <li><a href="sistema.html#pane-admin">Administrador</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
   </div>
-</li>
-<li><a href="cadastro.html">Cadastro</a></li>
-<li><a href="sistema.html">Sistema</a></li>
-</ul>
-</nav>
-</div>
 </header>
 <main class="container" id="conteudo" role="main">
 <section aria-labelledby="h-hero" class="hero">
@@ -63,7 +74,144 @@
 </main>
 <footer><div class="container"><p>© 2025 Juntos por Todos</p></div></footer>
 <script src="js/scripts.js"></script>
-<div id="toastRoot" class="toast" role="status" aria-live="polite"></div>
-<div class="modal-backdrop" id="modalRoot" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">Confirmação</h3><p id="modalMsg">Ação realizada com sucesso.</p><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;"><button class="btn" id="modalClose">Fechar</button></div></div></div>
+
+<!-- Demonstração técnica de componentes do design system -->
+<section class="u-hidden-demo">
+
+  <!-- 1. Cards responsivos de projeto + badges + botões -->
+  <div class="project-grid" style="margin-bottom:32px;">
+    <div class="project-col">
+      <article class="card-project">
+        <header class="card-project-header">
+          <h3 class="card-project-title">
+            <span class="badge badge-educacao">Educação</span>
+            Projeto Alfabetização
+          </h3>
+          <button class="btn-primary btn-sm">Doar</button>
+        </header>
+
+        <div class="card-project-body">
+          Alfabetização de adultos com foco em leitura básica e inclusão social.
+        </div>
+
+        <footer class="card-project-footer">
+          <div><strong>Meta:</strong> R$ 20.000</div>
+          <div><strong>Arrecadado:</strong> 50%</div>
+        </footer>
+      </article>
+    </div>
+
+    <div class="project-col">
+      <article class="card-project">
+        <header class="card-project-header">
+          <h3 class="card-project-title">
+            <span class="badge badge-saude">Saúde</span>
+            Projeto Saúde Comunitária
+          </h3>
+          <button class="btn-secondary btn-sm">Ver detalhes</button>
+        </header>
+
+        <div class="card-project-body">
+          Prevenção e campanhas de saúde comunitária para jovens e idosos.
+        </div>
+
+        <footer class="card-project-footer">
+          <div><strong>Meta:</strong> R$ 35.000</div>
+          <div><strong>Arrecadado:</strong> 30%</div>
+        </footer>
+      </article>
+    </div>
+
+    <div class="project-col">
+      <article class="card-project">
+        <header class="card-project-header">
+          <h3 class="card-project-title">
+            <span class="badge badge-capacitacao">Capacitação</span>
+            Projeto Tecendo Futuro
+          </h3>
+          <button class="btn-primary btn-sm" disabled>Inscrições Encerradas</button>
+        </header>
+
+        <div class="card-project-body">
+          Capacitação técnica para empregabilidade de jovens e adultos.
+        </div>
+
+        <footer class="card-project-footer">
+          <div><strong>Meta:</strong> R$ 25.000</div>
+          <div><strong>Arrecadado:</strong> 65%</div>
+        </footer>
+      </article>
+    </div>
+  </div>
+
+  <!-- 2. Botões com estados -->
+  <div style="display:flex; flex-wrap:wrap; gap:16px; margin-bottom:32px;">
+    <button class="btn-primary">Primário normal</button>
+    <button class="btn-primary" disabled>Primário desabilitado</button>
+    <button class="btn-secondary">Secundário normal</button>
+    <button class="btn-secondary btn-sm">Secundário pequeno</button>
+  </div>
+
+  <!-- 3. Formulário com validação visual -->
+  <form style="max-width:400px; background:#fff; border:1px solid var(--color-border); border-radius:var(--radius-md); box-shadow:var(--shadow); padding:16px; margin-bottom:32px;">
+    <div class="form-field">
+      <label class="form-label" for="demoNome">Nome Completo *</label>
+      <input id="demoNome" class="form-control is-valid" type="text" value="Ana Souza">
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="demoEmail">E-mail *</label>
+      <input id="demoEmail" class="form-control is-error" type="email" value="email_invalido">
+      <p class="form-error-text">E-mail inválido</p>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="demoInteresse">Interesse</label>
+      <select id="demoInteresse" class="form-control">
+        <option>Voluntariado</option>
+        <option>Doador/Apoiador</option>
+        <option>Capacitação Profissional</option>
+      </select>
+    </div>
+
+    <div style="margin-top:16px;">
+      <button class="btn-primary btn-sm" type="button">Enviar Cadastro</button>
+      <button class="btn-secondary btn-sm" type="button">Cancelar</button>
+    </div>
+  </form>
+
+  <!-- 4. Feedback: alerts -->
+  <div style="display:flex; flex-direction:column; gap:16px; max-width:480px; margin-bottom:32px;">
+    <div class="alert alert-success">Cadastro enviado com sucesso!</div>
+    <div class="alert alert-info">Lembrete: complete seu perfil para liberar mais recursos.</div>
+    <div class="alert alert-error">Erro ao salvar dados. Tente novamente.</div>
+  </div>
+
+  <!-- 5. Toast container -->
+  <div class="toast-container" id="toastArea">
+    <div class="toast">Seu cadastro foi enviado 👍</div>
+  </div>
+
+  <!-- 6. Modal de confirmação -->
+  <div class="modal-backdrop" id="exampleModal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <div id="modalTitle">Confirmação</div>
+        <button class="btn-secondary btn-sm" data-close-modal>&times;</button>
+      </div>
+
+      <div class="modal-body">
+        Tem certeza que deseja enviar seu cadastro?
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary btn-sm" data-close-modal>Cancelar</button>
+        <button class="btn-primary btn-sm">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- / Demonstração técnica de componentes -->
 </body>
 </html>
