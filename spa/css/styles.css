@@ -1,0 +1,192 @@
+/* ===== JuntosPorTodos - SPA (modular) ===== */
+:root {
+  --spa-primary: #1c7ed6;
+  --spa-secondary: #0ca678;
+  --spa-accent: #ffd43b;
+  --spa-danger: #e03131;
+  --spa-warning: #f08c00;
+  --spa-info: #1098ad;
+  --spa-neutral-100: #f8f9fa;
+  --spa-neutral-200: #f1f3f5;
+  --spa-neutral-300: #e9ecef;
+  --spa-neutral-600: #868e96;
+  --spa-neutral-900: #212529;
+
+  --spa-font-xs: 12px;
+  --spa-font-sm: 14px;
+  --spa-font-md: 16px;
+  --spa-font-lg: 18px;
+  --spa-font-xl: 24px;
+
+  --spa-space-8: 8px;
+  --spa-space-16: 16px;
+  --spa-space-24: 24px;
+  --spa-space-32: 32px;
+  --spa-space-48: 48px;
+  --spa-space-64: 64px;
+}
+
+.spa-root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--spa-neutral-900);
+  background: var(--spa-neutral-100);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.spa-header {
+  background: white;
+  border-bottom: 1px solid var(--spa-neutral-300);
+  padding: var(--spa-space-16);
+}
+
+.spa-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spa-space-16);
+}
+
+.spa-brand img {
+  height: 40px;
+  width: auto;
+}
+
+.spa-nav {
+  margin-top: var(--spa-space-8);
+  display: flex;
+  gap: var(--spa-space-16);
+  flex-wrap: wrap;
+}
+
+.spa-nav a {
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--spa-neutral-300);
+  background: var(--spa-neutral-200);
+  font-size: var(--spa-font-sm);
+}
+
+.spa-nav a.active {
+  border-color: var(--spa-primary);
+  background: #e7f5ff;
+  color: var(--spa-primary);
+}
+
+.spa-container {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: var(--spa-space-24) 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--spa-space-16);
+}
+
+.card {
+  grid-column: span 12;
+  background: white;
+  border: 1px solid var(--spa-neutral-300);
+  border-radius: 16px;
+  padding: var(--spa-space-16);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.card h3 {
+  margin: 0 0 var(--spa-space-8);
+  font-size: var(--spa-font-lg);
+}
+
+.card p {
+  margin: 0;
+  color: var(--spa-neutral-600);
+}
+
+/* Grid responsivo 12 colunas */
+@media (min-width: 480px) {
+  .card { grid-column: span 6; }
+}
+@media (min-width: 768px) {
+  .card { grid-column: span 4; }
+}
+@media (min-width: 1024px) {
+  .card { grid-column: span 3; }
+}
+
+/* Formulário + validação visual */
+.form {
+  background: white;
+  border: 1px solid var(--spa-neutral-300);
+  border-radius: 16px;
+  padding: var(--spa-space-24);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.form .row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spa-space-16);
+}
+
+@media (min-width: 768px) {
+  .form .row.two { grid-template-columns: 1fr 1fr; }
+  .form .row.three { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.label {
+  font-size: var(--spa-font-sm);
+  color: var(--spa-neutral-600);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.input, .select, .textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--spa-neutral-300);
+  background: var(--spa-neutral-100);
+  font-size: var(--spa-font-md);
+}
+
+.input[aria-invalid="true"], .select[aria-invalid="true"], .textarea[aria-invalid="true"] {
+  border-color: var(--spa-danger);
+  background: #fff5f5;
+}
+
+.error-text {
+  margin-top: 6px;
+  font-size: var(--spa-font-sm);
+  color: var(--spa-danger);
+}
+
+.success-banner, .error-banner {
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: var(--spa-space-16);
+  font-size: var(--spa-font-sm);
+  border: 1px solid transparent;
+}
+
+.success-banner {
+  background: #e6fcf5;
+  border-color: #c3fae8;
+  color: #087f5b;
+}
+
+.error-banner {
+  background: #fff5f5;
+  border-color: #ffe3e3;
+  color: #c92a2a;
+}
+
+.spa-footer {
+  border-top: 1px solid var(--spa-neutral-300);
+  background: white;
+  padding: var(--spa-space-16);
+  color: var(--spa-neutral-600);
+  font-size: var(--spa-font-sm);
+}
