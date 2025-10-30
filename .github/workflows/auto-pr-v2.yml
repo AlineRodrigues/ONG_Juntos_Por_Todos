@@ -1,0 +1,48 @@
+name: Auto PR for v2 branches
+
+on:
+  push:
+    branches:
+      - 'v2-*'
+      - 'v2-work'
+
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          head: ${{ github.ref_name }}
+          title: "v2 — Ajustes: ${{ github.ref_name }}"
+          body: |
+            Resumo das alterações geradas pela branch `${{ github.ref_name }}`:
+
+            - Reestruturação e ajustes nas páginas relacionadas à V2 (ex.: index, cadastro, projetos, sistema).
+            - Atualizações em estilos e scripts conforme necessário.
+
+            Commit de referência: `${{ github.sha }}`
+
+            Solicito revisão rápida e merge quando aprovado.
+          draft: false
+
+      - name: Enable auto-merge for the PR
+        if: always()
+        env:
+          GH_OWNER: ${{ github.repository_owner }}
+          GH_REPO: ${{ github.event.repository.name }}
+          BRANCH_NAME: ${{ github.ref_name }}
+        run: |
+          # procura o PR aberto com head igual à branch atual
+          PR_NUMBER=$(gh pr list --repo "${GH_OWNER}/${GH_REPO}" --head "${GH_OWNER}:${BRANCH_NAME}" --state open --json number --jq '.[0].number')
+          if [ -n "$PR_NUMBER" ]; then
+            echo "Found PR: $PR_NUMBER — enabling auto-merge (merge commit)"
+            gh pr merge "$PR_NUMBER" --repo "${GH_OWNER}/${GH_REPO}" --auto --merge || echo "Failed to enable auto-merge for PR $PR_NUMBER"
+          else
+            echo "No open PR found for branch ${BRANCH_NAME}; skipping auto-merge setup"
+          fi
