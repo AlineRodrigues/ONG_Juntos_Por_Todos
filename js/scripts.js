@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function(){
     panels.forEach(p=>{ p.classList.toggle('hidden', p.id !== id.replace('tb-','pane-')); });
   }
   tabs.forEach(t=>t.addEventListener('click', ()=>activate(t.id)));
-  if(tabs.length) activate('tb-admin');
+  if(tabs.length) activate('tb-vol');
 
   // Storage helpers
   const S = {
