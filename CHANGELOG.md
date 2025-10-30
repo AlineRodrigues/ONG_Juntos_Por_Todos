@@ -1,5 +1,8 @@
 # Changelog (resumo)
 
+## [Unreleased] - 2025-10-30
+- a2bc843 | Aline Rodrigues | 2025-10-30 | Adiciona template básico CHANGELOG.md
+
 Este arquivo contém um changelog básico por versão. O formato é intencionalmente simples para facilitar atualizações rápidas:
 
 - Cabeçalho de versão: `## [vX.Y.Z] - YYYY-MM-DD`
