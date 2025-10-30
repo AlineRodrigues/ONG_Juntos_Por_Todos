@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JuntosPorTodos - SPA</title>
+
+  <!-- CSS agora fica em ./css -->
+  <link rel="stylesheet" href="./css/styles.css">
+
+  <style>
+    .spa-btn {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--spa-primary);
+      background: #e7f5ff;
+      color: var(--spa-primary);
+      text-decoration: none;
+      font-size: var(--spa-font-sm);
+    }
+  </style>
+</head>
+<body class="spa-root">
+  <header class="spa-header">
+    <div class="spa-container">
+      <div class="spa-brand">
+        <img src="../logo.png" alt="Logo" onerror="this.style.display='none'">
+        <div>
+          <strong>JuntosPorTodos</strong><br>
+          <span style="font-size: var(--spa-font-sm); color: var(--spa-neutral-600);">Versão SPA básica</span>
+        </div>
+      </div>
+
+      <nav class="spa-nav" aria-label="Navegação principal">
+        <a href="#/home" class="active">Início</a>
+        <a href="#/cadastro">Cadastro</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app" role="main" class="spa-main"></main>
+
+  <footer class="spa-footer">
+    <div class="spa-container">
+      © <span id="year"></span> JuntosPorTodos — SPA de exemplo.
+      <span style="float:right;">Use com um servidor local (ex.: Live Server).</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Biblioteca externa usada na validação/máscara -->
+  <script src="https://unpkg.com/imask"></script>
+
+  <!-- Ponto de entrada da SPA. app.js importa os outros módulos. -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
