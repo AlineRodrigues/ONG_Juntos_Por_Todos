@@ -1,0 +1,27 @@
+name: Auto PR for v2 branches
+
+on:
+  push:
+    branches:
+      - 'v2-*'
+      - 'v2-work'
+
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          head: ${{ github.ref_name }}
+          title: "Auto PR: ${{ github.ref_name }} — alterações de v2"
+          body: |
+            Pull request criado automaticamente a partir do push na branch `${{ github.ref_name }}`.
+
+            Verifique as alterações e faça merge quando estiver pronto.
+          draft: false
