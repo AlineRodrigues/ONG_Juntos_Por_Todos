@@ -38,3 +38,10 @@ Observações e boas práticas
 Contato
 
 Se precisar de outro formato (tar.gz) ou instruções específicas para Windows, me avise e eu atualizo este README e os assets.
+
+Convenção de assets
+
+- build_<tag>_prod.zip — pacote "limpo" contendo apenas os arquivos de produção (recomendado para deploy).
+- build_<tag>.zip — snapshot completo do repositório naquele tag (útil para auditoria ou recuperação).
+
+Mantemos ambos por compatibilidade; prefira o pacote _prod para deploys de produção.
