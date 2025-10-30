@@ -19,9 +19,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: main
           head: ${{ github.ref_name }}
-          title: "Auto PR: ${{ github.ref_name }} — alterações de v2"
+          title: "v2 — Ajustes: ${{ github.ref_name }}"
           body: |
-            Pull request criado automaticamente a partir do push na branch `${{ github.ref_name }}`.
+            Resumo das alterações geradas pela branch `${{ github.ref_name }}`:
 
-            Verifique as alterações e faça merge quando estiver pronto.
+            - Reestruturação e ajustes nas páginas relacionadas à V2 (ex.: index, cadastro, projetos, sistema).
+            - Atualizações em estilos e scripts conforme necessário.
+
+            Commit de referência: `${{ github.sha }}`
+
+            Solicito revisão rápida e merge quando aprovado.
           draft: false
