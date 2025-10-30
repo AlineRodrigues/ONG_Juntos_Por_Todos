@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Sistema — Juntos por Todos</title>
+<title>Usuários — Juntos por Todos</title>
 <meta content="Painel por persona: Administrador, Voluntário, Doador/Apoiador e Visitante" name="description"/>
 <link href="css/styles.css" rel="stylesheet"/>
 </head>
@@ -18,21 +18,22 @@
 <li><a href="index.html">Início</a></li>
 <li><a href="projetos.html">Projetos</a></li>
 <li><a href="cadastro.html">Cadastro</a></li>
-<li><a aria-current="page" href="sistema.html">Sistema</a></li>
+<li><a aria-current="page" href="sistema.html">Usuários</a></li>
 </ul>
 </nav>
 </div>
 </header>
 <main class="container" id="conteudo">
-<section class="hero hero-small"><div><h1>Usuário — Áreas por Perfil</h1><p class="lead">Acesse as funcionalidades de acordo com seu perfil.</p></div><img alt="Painel do sistema" class="hero-img" loading="lazy" src="img/hero-projetos.svg"/></section>
+<section class="hero hero-small"><div><h1>Usuários</h1><p class="lead">Acesse as funcionalidades de acordo com seu perfil.</p></div><img alt="Painel do sistema" class="hero-img" loading="lazy" src="img/hero-projetos.svg"/></section>
 <section class="dashboards">
 <div aria-label="Perfis de usuário" class="tabs" role="tablist">
 
-<button aria-controls="pane-vol" aria-selected="false" class="tab" id="tb-vol" role="tab">Voluntário</button>
+<button aria-controls="pane-vol" aria-selected="true" class="tab active" id="tb-vol" role="tab">Voluntário</button>
 <button aria-controls="pane-doador" aria-selected="false" class="tab" id="tb-doador" role="tab">Doador/Apoiador</button>
 <button aria-controls="pane-visit" aria-selected="false" class="tab" id="tb-visit" role="tab">Visitante</button>
-<button aria-controls="pane-admin" aria-selected="true" class="tab active" id="tb-admin" role="tab">Administrador</button></div>
-<section aria-labelledby="tb-admin" class="tab-panel" id="pane-admin" role="tabpanel">
+<button aria-controls="pane-admin" aria-selected="false" class="tab" id="tb-admin" role="tab">Administrador</button>
+</div>
+<section aria-labelledby="tb-admin" class="tab-panel hidden" id="pane-admin" role="tabpanel">
 <h3>Administrador</h3>
 <article class="card">
 <h4>Acesso Administrativo</h4>
@@ -81,7 +82,7 @@
 </div>
 </div>
 </section>
-<section aria-labelledby="tb-vol" class="tab-panel hidden" id="pane-vol" role="tabpanel">
+<section aria-labelledby="tb-vol" class="tab-panel" id="pane-vol" role="tabpanel">
 <h3>Voluntário</h3>
 <article class="card">
 <h4>Procurar Oportunidades</h4>
@@ -129,9 +130,23 @@
 <article class="card">
 <h4>Galeria</h4>
 <div class="gallery">
-<figure><img alt="Educação e aprendizado" src="https://images.unsplash.com/photo-1509062522246-3755977927d7" /><figcaption>Educação e aprendizado</figcaption></figure>
-<figure><img alt="Saúde comunitária" src="https://images.unsplash.com/photo-1576765607924-3f7b8410a787" /><figcaption>Saúde comunitária</figcaption></figure>
-<figure><img alt="Capacitação profissional" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0" /><figcaption>Capacitação profissional</figcaption></figure>
+  <figure>
+    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=60"
+         alt="Educação e aprendizado - pessoas estudando juntas em ambiente de aprendizagem"/>
+    <figcaption>Educação e aprendizado</figcaption>
+  </figure>
+
+  <figure>
+    <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=800&q=60"
+         alt="Saúde comunitária - profissional de saúde atendendo comunidade"/>
+    <figcaption>Saúde comunitária</figcaption>
+  </figure>
+
+  <figure>
+    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=60"
+         alt="Capacitação profissional - jovens aprendendo tecnologia"/>
+    <figcaption>Capacitação profissional</figcaption>
+  </figure>
 </div>
 </article>
 </div>
