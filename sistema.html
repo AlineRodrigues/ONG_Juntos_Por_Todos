@@ -11,27 +11,39 @@
 <body>
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <header class="site-header">
-<div class="container header-inner">
-<a class="logo" href="index.html"><img alt="Logotipo Juntos por Todos" src="img/logo.svg"/></a>
-<button class="hamburger" id="btnHamburger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
-<nav aria-label="Navegação principal" class="main-nav">
-<ul class="nav-list">
-<li><a href="index.html">Início</a></li>
-<li class="nav-item"><a href="projetos.html" aria-haspopup="true" aria-expanded="false">Projetos</a>
-  <div class="submenu" role="menu">
-    <a href="projetos.html#educacao" role="menuitem">Educação</a>
-    <a href="projetos.html#saude" role="menuitem">Saúde</a>
-    <a href="projetos.html#capacitacao" role="menuitem">Capacitação</a>
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img src="img/logo.png" alt="Logotipo Juntos por Todos"/>
+    </a>
+
+    <button class="nav-toggle" aria-expanded="false" aria-label="Abrir menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html">Início</a></li>
+        <li class="nav-item"><a href="projetos.html">Projetos</a></li>
+        <li class="nav-item"><a href="cadastro.html">Cadastro</a></li>
+        <li class="nav-item nav-has-dropdown">
+          <button class="nav-link-with-dropdown" aria-haspopup="true" aria-expanded="false">
+            Usuários <span class="chevron"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="sistema.html#pane-vol">Voluntário</a></li>
+            <li><a href="sistema.html#pane-doador">Doador/Apoiador</a></li>
+            <li><a href="sistema.html#pane-visit">Visitante</a></li>
+            <li><a href="sistema.html#pane-admin">Administrador</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
   </div>
-</li>
-<li><a href="cadastro.html">Cadastro</a></li>
-<li><a aria-current="page" href="sistema.html">Sistema</a></li>
-</ul>
-</nav>
-</div>
 </header>
 <main class="container" id="conteudo">
-<section class="hero hero-small"><div><h1>Selecione o seu perfil</h1><p class="lead">Acesse as funcionalidades de acordo com seu perfil.</p></div><img alt="Painel do sistema" class="hero-img" loading="lazy" src="img/hero-projetos.svg"/></section>
+<section class="hero hero-small"><div><h1>Usuários</h1><p class="lead">Acesse as funcionalidades de acordo com seu perfil.</p></div><img alt="Painel do sistema" class="hero-img" loading="lazy" src="img/hero-projetos.svg"/></section>
 <section class="dashboards">
 <div aria-label="Perfis de usuário" class="tabs" role="tablist">
 
@@ -148,7 +160,5 @@
 </main>
 <footer><div class="container"><p>© 2025 Juntos por Todos</p></div></footer>
 <script src="js/scripts.js"></script>
-<div id="toastRoot" class="toast" role="status" aria-live="polite"></div>
-<div class="modal-backdrop" id="modalRoot" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">Confirmação</h3><p id="modalMsg">Ação realizada com sucesso.</p><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;"><button class="btn" id="modalClose">Fechar</button></div></div></div>
 </body>
 </html>

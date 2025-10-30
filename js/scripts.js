@@ -54,16 +54,58 @@ document.addEventListener('DOMContentLoaded', function(){
 (function(){
   const $ = (s, r=document)=>r.querySelector(s);
   const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+// Abas
+const tabs = $$('.tabs .tab');
+const panels = $$('.tab-panel');
 
-  // Abas
-  const tabs = $$('.tabs .tab');
-  const panels = $$('.tab-panel');
-  function activate(id){
-    tabs.forEach(t=>{ const on = t.id===id; t.classList.toggle('active', on); t.setAttribute('aria-selected', on?'true':'false'); });
-    panels.forEach(p=>{ p.classList.toggle('hidden', p.id !== id.replace('tb-','pane-')); });
+function activateTab(tabId){
+  tabs.forEach(function(t){
+    const on = (t.id === tabId);
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+
+  panels.forEach(function(p){
+    const show = (p.id === tabId.replace(/^tb-/, 'pane-'));
+    p.classList.toggle('hidden', !show);
+  });
+}
+
+function activateFromHash(){
+  var hash = window.location.hash || '#pane-vol';
+  var tabId = 'tb-' + hash.replace(/^#pane-/, '');
+  activateTab(tabId);
+  if (typeof highlightActiveUserMenu === 'function') {
+    highlightActiveUserMenu();
   }
-  tabs.forEach(t=>t.addEventListener('click', ()=>activate(t.id)));
-  if(tabs.length) activate('tb-admin');
+}
+
+function initTabs(){
+  if(!tabs.length) return;
+
+  tabs.forEach(function(tabBtn){
+    tabBtn.addEventListener('click', function(){
+      var tabId = tabBtn.id;
+      activateTab(tabId);
+
+      var newHash = '#'+ tabId.replace(/^tb-/, 'pane-');
+      if(window.location.hash !== newHash){
+        window.location.hash = newHash;
+      }
+
+      if (typeof highlightActiveUserMenu === 'function') {
+        highlightActiveUserMenu();
+      }
+    });
+  });
+
+  // ativa a aba correta quando a página carrega
+  activateFromHash();
+}
+
+// inicializa e mantém sincronizado com o hash
+initTabs();
+window.addEventListener('hashchange', activateFromHash);
 
   // Storage helpers
   const S = {
@@ -237,89 +279,149 @@ document.addEventListener('DOMContentLoaded', function(){
   renderMinhasDoacoes();
 })();
 
+// === Equaliza alturas dos cards entre as duas seções da Home ===
+function equalizeHomeCards(){
+  const cardsTop = Array.from(document.querySelectorAll('.cards-grid .card'));
+  const cardsBottom = Array.from(document.querySelectorAll('.features-grid .feature-card'));
+  const allCards = cardsTop.concat(cardsBottom);
+  if (!allCards.length) return;
 
-document.addEventListener('DOMContentLoaded', function(){
-  const burger = document.getElementById('btnHamburger');
-  const navList = document.querySelector('.nav-list');
-  if(burger && navList){
-    burger.addEventListener('click', ()=>{
-      const open = navList.classList.toggle('open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  allCards.forEach(card => { card.style.minHeight = ''; });
+
+  let maxH = 0;
+  allCards.forEach(card => {
+    const h = card.offsetHeight;
+    if (h > maxH) maxH = h;
+  });
+
+  allCards.forEach(card => {
+    card.style.minHeight = maxH + 'px';
+  });
+}
+window.addEventListener('load', equalizeHomeCards);
+window.addEventListener('resize', equalizeHomeCards);
+
+// === Navegação responsiva (hambúrguer + dropdown mobile) ===
+// === Marcação visual da aba ativa no dropdown de Usuários ===
+function highlightActiveUserMenu(){
+  var menuLinks = document.querySelectorAll('.dropdown-menu a');
+  if(!menuLinks.length) return;
+
+  var loc = window.location;
+  var currentHash = loc.hash || '';
+  var currentPage = loc.pathname.split('/').pop() || '';
+
+  // Se estamos em sistema.html e não tem hash, padrão é #pane-vol
+  var targetHash = currentHash;
+  if(currentPage.indexOf('sistema') !== -1){
+    if(!targetHash){
+      targetHash = '#pane-vol';
+    }
+  }
+
+  // limpa estado anterior
+  menuLinks.forEach(function(a){
+    a.classList.remove('active');
+  });
+
+  // marca link cujo href termina com o hash atual
+  if(targetHash){
+    menuLinks.forEach(function(a){
+      var href = a.getAttribute('href') || '';
+      if(href.endsWith(targetHash)){
+        a.classList.add('active');
+      }
     });
   }
-  const navItem = document.querySelector('.nav-item');
-  if(navItem){
-    const trigger = navItem.querySelector('a');
-    if(trigger){
-      trigger.addEventListener('click', (e)=>{
-        e.preventDefault();
-        navItem.classList.toggle('open');
-        trigger.setAttribute('aria-expanded', navItem.classList.contains('open') ? 'true':'false');
+}
+
+function initNav(){
+  var navToggle=document.querySelector('.nav-toggle');
+  var navList=document.querySelector('.nav-list');
+  if(navToggle && navList){
+    navToggle.addEventListener('click',function(){
+      var isOpen=navList.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+
+  document.querySelectorAll('.nav-has-dropdown').forEach(function(item){
+    var trigger=item.querySelector('.nav-link-with-dropdown');
+    var submenu=item.querySelector('.dropdown-menu');
+    if(trigger && submenu){
+      trigger.addEventListener('click',function(e){
+        // Em desktop o hover já abre; no mobile a gente controla aqui
+        if(window.matchMedia('(max-width:768px)').matches){
+          e.preventDefault();
+          var expanded = trigger.getAttribute('aria-expanded')==='true';
+          trigger.setAttribute('aria-expanded', expanded ? 'false':'true');
+          submenu.classList.toggle('open');
+        }
       });
     }
-    navItem.addEventListener('mouseenter', ()=>navItem.classList.add('open'));
-    navItem.addEventListener('mouseleave', ()=>navItem.classList.remove('open'));
+  });
+}
+window.addEventListener('load', highlightActiveUserMenu);
+window.addEventListener('hashchange', highlightActiveUserMenu);
+window.addEventListener('load', initNav);
+
+/* === Mantém o dropdown aberto tempo suficiente no desktop === */
+function initDesktopDropdownHold(){
+  var dd = document.querySelector('.nav-has-dropdown');
+  if(!dd) return;
+
+  var trigger = dd.querySelector('.nav-link-with-dropdown');
+  var menu    = dd.querySelector('.dropdown-menu');
+  if(!trigger || !menu) return;
+
+  var hideTimeout;
+
+  function openMenu(){
+    clearTimeout(hideTimeout);
+    if(window.matchMedia('(min-width:769px)').matches){
+      dd.classList.add('dropdown-open');
+    }
   }
-  // Validation visuals
-  document.querySelectorAll('form').forEach(f=>{
-    f.addEventListener('submit', ()=>{
-      Array.from(f.elements).forEach(el=>{
-        if(el.willValidate){
-          el.classList.toggle('is-invalid', !el.checkValidity());
-          el.classList.toggle('is-valid', el.checkValidity());
-        }
-      });
-    });
-    f.querySelectorAll('input,select,textarea').forEach(el=>{
-      el.addEventListener('blur', ()=>{
-        if(el.willValidate){
-          el.classList.toggle('is-invalid', !el.checkValidity());
-          el.classList.toggle('is-valid', el.checkValidity());
-        }
-      });
-    });
-  });
-  // Toast / Modal helpers
-  const toastRoot = document.getElementById('toastRoot');
-  window.showToast = (msg)=>{
-    if(!toastRoot) return;
-    toastRoot.textContent = msg || 'Ação concluída.';
-    toastRoot.classList.add('show');
-    setTimeout(()=>toastRoot.classList.remove('show'), 2800);
-  };
-  const modalRoot = document.getElementById('modalRoot');
-  const modalClose = document.getElementById('modalClose');
-  window.showModal = (title, message)=>{
-    if(!modalRoot) return;
-    if(title) modalRoot.querySelector('#modalTitle').textContent = title;
-    if(message) modalRoot.querySelector('#modalMsg').textContent = message;
-    modalRoot.classList.add('open');
-    modalRoot.setAttribute('aria-hidden', 'false');
-  };
-  const closeModal = ()=>{
-    modalRoot?.classList.remove('open');
-    modalRoot?.setAttribute('aria-hidden', 'true');
-  };
-  modalClose?.addEventListener('click', closeModal);
-  modalRoot?.addEventListener('click', (e)=>{ if(e.target === modalRoot) closeModal(); });
 
-  // Hook: show feedback on simulated actions if elements exist
-  document.getElementById('btnSalvarProjeto')?.addEventListener('click', ()=>setTimeout(()=>showToast('Projeto salvo/atualizado.'), 250));
-  document.getElementById('btnDoarSist')?.addEventListener('click', ()=>setTimeout(()=>showModal('Obrigado!', 'Doação registrada (simulação).'), 300));
-});
+  function scheduleClose(){
+    if(window.matchMedia('(min-width:769px)').matches){
+      hideTimeout = setTimeout(function(){
+        dd.classList.remove('dropdown-open');
+      }, 200);
+    }
+  }
 
+  trigger.addEventListener('mouseenter', openMenu);
+  trigger.addEventListener('mouseleave', scheduleClose);
 
-// Auto-select "Interesse" from URL
-document.addEventListener('DOMContentLoaded', function(){
-  try{
-    const params = new URLSearchParams(window.location.search);
-    const interesse = params.get('interesse');
-    const select = document.querySelector('select[name="interesse"]');
-    if(select && interesse){ select.value = interesse; }
-  }catch(e){}
-  // Keep dropdown accessible on keyboard
-  document.querySelectorAll('.nav-item > a').forEach(a=>{
-    a.addEventListener('focus', ()=> a.parentElement?.classList.add('open'));
-    a.addEventListener('blur', ()=> a.parentElement?.classList.remove('open'));
-  });
+  menu.addEventListener('mouseenter', openMenu);
+  menu.addEventListener('mouseleave', scheduleClose);
+}
+window.addEventListener('load', initDesktopDropdownHold);
+
+/* === Sombra dinâmica do cabeçalho fixo === */
+function initHeaderShadow(){
+  var header = document.querySelector('.site-header');
+  if(!header) return;
+
+  function applyShadow(){
+    // se rolou mais de 4px, aplica classe "header-scrolled"
+    if(window.scrollY > 4){
+      header.classList.add('header-scrolled');
+    }else{
+      header.classList.remove('header-scrolled');
+    }
+  }
+
+  applyShadow(); // estado inicial
+  window.addEventListener('scroll', applyShadow);
+}
+window.addEventListener('load', initHeaderShadow);
+
+/* === Modal helper / fechar modal em [data-close-modal] === */
+document.addEventListener('click', function(e){
+  if(e.target.matches('[data-close-modal]')){
+    var backdrop = e.target.closest('.modal-backdrop');
+    if(backdrop){ backdrop.classList.remove('is-open'); }
+  }
 });

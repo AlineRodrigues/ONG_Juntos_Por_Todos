@@ -11,21 +11,40 @@
 <body>
 <a class="skip-link" href="#formulario">Ir para o formulário</a>
 <header class="site-header">
-<div class="container header-inner">
-<a class="logo" href="index.html"><img alt="Logotipo Juntos por Todos" src="img/logo.svg"/></a>
-<button class="hamburger" id="btnHamburger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
-<nav aria-label="Navegação principal" class="main-nav"><ul class="nav-list"><li><a href="index.html">Início</a></li><li class="nav-item"><a href="projetos.html" aria-haspopup="true" aria-expanded="false">Projetos</a>
-  <div class="submenu" role="menu">
-    <a href="projetos.html#educacao" role="menuitem">Educação</a>
-    <a href="projetos.html#saude" role="menuitem">Saúde</a>
-    <a href="projetos.html#capacitacao" role="menuitem">Capacitação</a>
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img src="img/logo.png" alt="Logotipo Juntos por Todos"/>
+    </a>
+
+    <button class="nav-toggle" aria-expanded="false" aria-label="Abrir menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="index.html">Início</a></li>
+        <li class="nav-item"><a href="projetos.html">Projetos</a></li>
+        <li class="nav-item"><a href="cadastro.html">Cadastro</a></li>
+        <li class="nav-item nav-has-dropdown">
+          <button class="nav-link-with-dropdown" aria-haspopup="true" aria-expanded="false">
+            Usuários <span class="chevron"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="sistema.html#pane-vol">Voluntário</a></li>
+            <li><a href="sistema.html#pane-doador">Doador/Apoiador</a></li>
+            <li><a href="sistema.html#pane-visit">Visitante</a></li>
+            <li><a href="sistema.html#pane-admin">Administrador</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
   </div>
-</li><li><a aria-current="page" href="cadastro.html">Cadastro</a></li><li><a href="sistema.html">Sistema</a></li></ul></nav>
-</div>
 </header>
 <main class="container" role="main">
-<section class="hero hero-small"><div><h1>Cadastro</h1><p class="lead">Preencha seus dados. Campos com * são obrigatórios.</p></div><img alt="Formulário" class="hero-img" loading="lazy" src="img/hero-cadastro.svg"/></section>
-<form aria-labelledby="h-form" class="card" id="cadastroForm" novalidate=""><fieldset><legend>Preferências</legend>
+<section class="hero hero-small card span-12"><div><h1>Cadastro</h1><p class="lead">Preencha seus dados. Campos com * são obrigatórios.</p></div><img alt="Formulário" class="hero-img" loading="lazy" src="img/hero-cadastro.svg"/></section>
+<form aria-labelledby="h-form" class="card span-12" id="cadastroForm" novalidate=""><fieldset><legend>Preferências</legend>
 <div class="form-group"><label for="interesse">Interesse</label><select id="interesse" name="interesse"><option value="">Escolha</option><option value="voluntariado">Voluntariado</option><option value="doacao">Doação</option><option value="parceria">Parceria</option></select></div>
 </fieldset>
 <fieldset><legend id="h-form">Dados Pessoais</legend>
@@ -36,14 +55,78 @@
 <div class="form-group"><label for="nascimento">Data de Nascimento</label><input id="nascimento" max="2007-12-31" name="nascimento" type="date"/></div>
 </fieldset>
 <fieldset><legend>Endereço</legend>
-<div class="form-row">
-<div class="form-group"><label for="logradouro">Logradouro</label><input id="logradouro" name="logradouro" type="text"/></div>
-<div class="form-group"><label for="numero">Número</label><input id="numero" name="numero" type="text"/></div>
-</div>
+  <!-- Linha 1 - Endereço -->
+  <div class="form-row" style="grid-template-columns:1fr;">
+    <div class="form-group">
+      <label for="endereco">Endereço</label>
+      <input id="endereco" name="endereco" type="text"/>
+    </div>
+  </div>
 
-<div class="form-group"><label for="cep">CEP *</label><input id="cep" inputmode="numeric" name="cep" pattern="\d{5}-\d{3}" placeholder="00000-000" required="" type="text"/><div aria-live="polite" class="error" id="cep-error"></div></div>
-<div class="form-group"><label for="endereco">Endereço</label><input id="endereco" name="endereco" type="text"/></div>
-<div class="form-row"><div class="form-group"><label for="cidade">Cidade</label><input id="cidade" name="cidade" type="text"/></div><div class="form-group"><label for="estado">Estado</label><select id="estado" name="estado"><option value="">Selecione</option><option value="SP">SP</option><option value="RJ">RJ</option><option value="MG">MG</option></select></div></div>
+  <!-- Linha 2 - Número e CEP -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="numero">Número</label>
+      <input id="numero" name="numero" type="text"/>
+    </div>
+    <div class="form-group">
+      <label for="cep">CEP *</label>
+      <input id="cep" name="cep" type="text" inputmode="numeric" pattern="\d{5}-?\d{3}"/>
+      <div aria-live="polite" class="error" id="cep-error"></div>
+    </div>
+  </div>
+
+  <!-- Linha 3 - Cidade e UF -->
+  <div class="form-row">
+    <div class="form-group">
+      <label for="cidade">Cidade *</label>
+      <select id="cidade" name="cidade" required>
+<option value="">Selecione</option>
+      <option value="Rio Branco">Rio Branco</option>
+      <option value="Maceió">Maceió</option>
+      <option value="Macapá">Macapá</option>
+      <option value="Manaus">Manaus</option>
+      <option value="Salvador">Salvador</option>
+      <option value="Fortaleza">Fortaleza</option>
+      <option value="Brasília">Brasília</option>
+      <option value="Vitória">Vitória</option>
+      <option value="Goiânia">Goiânia</option>
+      <option value="São Luís">São Luís</option>
+      <option value="Cuiabá">Cuiabá</option>
+      <option value="Campo Grande">Campo Grande</option>
+      <option value="Belo Horizonte">Belo Horizonte</option>
+      <option value="Belém">Belém</option>
+      <option value="João Pessoa">João Pessoa</option>
+      <option value="Curitiba">Curitiba</option>
+      <option value="Recife">Recife</option>
+      <option value="Teresina">Teresina</option>
+      <option value="Rio de Janeiro">Rio de Janeiro</option>
+      <option value="Natal">Natal</option>
+      <option value="Porto Alegre">Porto Alegre</option>
+      <option value="Porto Velho">Porto Velho</option>
+      <option value="Boa Vista">Boa Vista</option>
+      <option value="Florianópolis">Florianópolis</option>
+      <option value="São Paulo">São Paulo</option>
+      <option value="Aracaju">Aracaju</option>
+      <option value="Palmas">Palmas</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="uf">Estado (UF) *</label>
+      <select id="uf" name="uf" required>
+<option value="">Selecione</option>
+      <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option>
+      <option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option>
+      <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
+      <option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option>
+      <option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
+      <option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option>
+      <option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option>
+      <option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option>
+      <option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+      </select>
+    </div>
+  </div>
 </fieldset>
 
 <button class="btn btn-primary" type="submit">Enviar Cadastro</button>
@@ -51,7 +134,5 @@
 </main>
 <footer><div class="container"><p>© 2025 Juntos por Todos</p></div></footer>
 <script src="js/scripts.js"></script>
-<div id="toastRoot" class="toast" role="status" aria-live="polite"></div>
-<div class="modal-backdrop" id="modalRoot" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><h3 id="modalTitle">Confirmação</h3><p id="modalMsg">Ação realizada com sucesso.</p><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;"><button class="btn" id="modalClose">Fechar</button></div></div></div>
 </body>
 </html>
