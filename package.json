@@ -15,8 +15,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/jsdom-interactions.js",
-    "test:e2e": "node tests/interaction-test.js  # E2E com puppeteer — execute somente após subir servidor local"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
