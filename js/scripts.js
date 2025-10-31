@@ -127,8 +127,12 @@ if(form){
 
 // ====== Sistema (abas e interações completas) ======
 (function(){
-  const $ = (s, r=document)=>r.querySelector(s);
-  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+  // Make $/$$ resilient to multiple evaluations in test environments.
+  // Use window.$/window.$$ if present (e.g., provided by a harness), otherwise
+  // provide local implementations. Use `var` to avoid `const` redeclaration errors
+  // when the script is evaluated more than once inside JSDOM.
+  var $ = (typeof window !== 'undefined' && window.$) ? window.$ : function(s, r=document){ return r.querySelector(s); };
+  var $$ = (typeof window !== 'undefined' && window.$$) ? window.$$ : function(s, r=document){ return Array.from(r.querySelectorAll(s)); };
 // Abas
 const tabs = $$('.tabs .tab');
 const panels = $$('.tab-panel');

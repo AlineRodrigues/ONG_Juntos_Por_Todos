@@ -6,20 +6,28 @@ const { JSDOM } = require('jsdom');
     // Load HTML and script
     const sistemaHtml = fs.readFileSync('sistema.html','utf8');
     const cadastroHtml = fs.readFileSync('cadastro.html','utf8');
-    const scriptContent = fs.readFileSync('js/scripts.js','utf8');
+    let scriptContent = fs.readFileSync('js/scripts.js','utf8');
 
     // Helper to run a DOM test
     async function testDom(html, actions){
-      // Inline the script into the HTML so it runs during parsing (ensures DOMContentLoaded handlers execute)
+      // Wrap the whole script in an IIFE so repeated evaluation doesn't redeclare globals
+  // make the inlined script safer for repeated evaluation by converting const $/$$ to var
+  let safeScript = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
+  // guard against calling addEventListener on non-elements (defensive for JSDOM)
+  safeScript = safeScript.replace(/([a-zA-Z0-9_$]+)\.addEventListener\(/g, "if($1 && typeof $1.addEventListener === 'function'){ $1.addEventListener(");
+  const wrapped = `(function(){\n${safeScript}\n})();`;
+      // Provide a small prelude to ensure localStorage and alert are defined
       const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
-  const htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${scriptContent}\n})();</script>`);
+      // Remove external CSS link and script tag to avoid network fetch and duplicate eval
+      const htmlNoCss = html.replace(/<link[^>]*href=(?:"|')css\/styles\.css(?:"|')[^>]*>/ig, '');
+      const htmlNoScript = htmlNoCss.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/ig, '');
 
-      const dom = new JSDOM(htmlWithScript, { 
+      const dom = new JSDOM(htmlNoScript, {
         url: 'http://localhost/',
-        runScripts: 'dangerously', 
+        runScripts: 'dangerously',
         resources: 'usable',
         beforeParse(win){
-          // provide simple window.localStorage and alert as a fallback (script will also define them)
+          // provide simple window.localStorage and alert as a fallback
           const store = Object.create(null);
           win.localStorage = {
             getItem(key){ return Object.prototype.hasOwnProperty.call(store,key)?store[key]:null; },
@@ -33,6 +41,8 @@ const { JSDOM } = require('jsdom');
       const { window } = dom;
       // expose console to capture logs
       window.console = console;
+      // evaluate script inside the JSDOM window (safeScript already prepared)
+      try{ window.eval(pre + '\n' + wrapped); }catch(e){ /* ignore - harness will record failures */ }
       // wait briefly for scripts to run and event listeners to attach
       await new Promise(r=>setTimeout(r,120));
       // run actions

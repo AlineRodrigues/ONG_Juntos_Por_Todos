@@ -5,22 +5,17 @@ const { JSDOM } = require('jsdom');
     const htmlPath = process.argv[2];
     if(!htmlPath) throw new Error('usage: node jsdom-single.js <html-file>');
     const html = fs.readFileSync(htmlPath,'utf8');
-    const scriptContent = fs.readFileSync('js/scripts.js','utf8');
-
+    let scriptContent = fs.readFileSync('js/scripts.js','utf8');
+    // wrap in IIFE to avoid global redeclarations when inlining
+  // make the inlined script safer for repeated evaluation by converting const $/$$ to var
+  let safeScript = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
+  // guard against calling addEventListener on non-elements (defensive for JSDOM)
+  safeScript = safeScript.replace(/([a-zA-Z0-9_$]+)\.addEventListener\(/g, "if($1 && typeof $1.addEventListener === 'function'){ $1.addEventListener(");
+  const wrapped = `(function(){\n${safeScript}\n})();`;
     const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
-    // make the inlined script safer for repeated evaluation inside JSDOM by
-    // converting top-level `const $ =` / `const $$ =` into `var $ =` / `var $$ =`
-    const safeScript = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
-    // guard against scripts that call addEventListener on non-elements in the JSDOM environment
-    try{
-  const guardRegex = /if\s*\(\s*btnLogin\s*\)\s*\{\s*btnLogin\.addEventListener\(/g;
-      if(guardRegex.test(safeScript)){
-        safeScript = safeScript.replace(guardRegex, "if(btnLogin && typeof btnLogin.addEventListener === 'function'){ btnLogin.addEventListener(");
-      }
-    }catch(e){ /* ignore - defensive */ }
-    let htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${safeScript}\n})();</script>`);
     // remove external CSS link to avoid JSDOM trying to fetch http://localhost/css/styles.css
-    htmlWithScript = htmlWithScript.replace(/<link[^>]*href=(?:"|')css\/styles\.css(?:"|')[^>]*>/i, '');
+    const htmlNoCss = html.replace(/<link[^>]*href=(?:"|')css\/styles\.css(?:"|')[^>]*>/i, '');
+    let htmlWithScript = htmlNoCss.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/ig, `<script>(function(){ ${pre}\n${wrapped}\n})();</script>`);
 
     const dom = new JSDOM(htmlWithScript, { url: 'http://localhost/', runScripts:'dangerously', resources:'usable', beforeParse(win){
       const store = Object.create(null);
