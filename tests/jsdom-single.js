@@ -8,7 +8,9 @@ const { JSDOM } = require('jsdom');
     let scriptContent = fs.readFileSync('js/scripts.js','utf8');
     // wrap in IIFE to avoid global redeclarations when inlining
   // make the inlined script safer for repeated evaluation by converting const $/$$ to var
-  const safeScript = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
+  let safeScript = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
+  // guard against calling addEventListener on non-elements (defensive for JSDOM)
+  safeScript = safeScript.replace(/([a-zA-Z0-9_$]+)\.addEventListener\(/g, "if($1 && typeof $1.addEventListener === 'function'){ $1.addEventListener(");
   const wrapped = `(function(){\n${safeScript}\n})();`;
     const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
     // remove external CSS link to avoid JSDOM trying to fetch http://localhost/css/styles.css
