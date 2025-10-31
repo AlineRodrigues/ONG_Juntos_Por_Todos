@@ -11,7 +11,9 @@ const { JSDOM } = require('jsdom');
     // Helper to run a DOM test
     async function testDom(html, actions){
       // Wrap the whole script in an IIFE so repeated evaluation doesn't redeclare globals
-      const wrapped = `(function(){\n${scriptContent}\n})();`;
+  // make the inlined script safer for repeated evaluation by converting const $/$$ to var
+  const safeScript = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
+  const wrapped = `(function(){\n${safeScript}\n})();`;
       // Provide a small prelude to ensure localStorage and alert are defined
       const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
       // Remove external CSS link to avoid JSDOM trying to fetch resources
