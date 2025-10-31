@@ -1,0 +1,10 @@
+# dependencies
+node_modules/
+
+# build artifacts
+build_v2*.zip
+releases/*/build_*.zip
+
+# editor / OS
+.vscode/
+.DS_Store
