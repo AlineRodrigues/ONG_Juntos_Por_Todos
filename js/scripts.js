@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function(){
   function mask(el, type){
-    if(el && typeof el.addEventListener === 'function'){ el.addEventListener('input', function(e){
+    el&&el.addEventListener('input', function(e){
       let v=e.target.value.replace(/\D/g,'');
       if(type==='cpf'){ v=v.slice(0,11); v=v.replace(/(\d{3})(\d)/,'$1.$2'); v=v.replace(/(\d{3})(\d)/,'$1.$2'); v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2'); }
       if(type==='tel'){ v=v.slice(0,11); if(v.length>10){ v=v.replace(/(\d{2})(\d{5})(\d{4})/,'($1) $2-$3'); } else { v=v.replace(/(\d{2})(\d{4})(\d{0,4})/,'($1) $2-$3'); } }
       if(type==='cep'){ v=v.slice(0,8); v=v.replace(/(\d{5})(\d{1,3})/,'$1-$2'); }
       e.target.value=v;
-    }); }
+    });
   }
   mask(document.getElementById('cpf'),'cpf');
   mask(document.getElementById('telefone'),'tel');
@@ -127,8 +127,12 @@ if(form){
 
 // ====== Sistema (abas e interações completas) ======
 (function(){
-  const $ = (s, r=document)=>r.querySelector(s);
-  const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+  // Make $/$$ resilient to multiple evaluations in test environments.
+  // Use window.$/window.$$ if present (e.g., provided by a harness), otherwise
+  // provide local implementations. Use `var` to avoid `const` redeclaration errors
+  // when the script is evaluated more than once inside JSDOM.
+  var $ = (typeof window !== 'undefined' && window.$) ? window.$ : function(s, r=document){ return r.querySelector(s); };
+  var $$ = (typeof window !== 'undefined' && window.$$) ? window.$$ : function(s, r=document){ return Array.from(r.querySelectorAll(s)); };
 // Abas
 const tabs = $$('.tabs .tab');
 const panels = $$('.tab-panel');
