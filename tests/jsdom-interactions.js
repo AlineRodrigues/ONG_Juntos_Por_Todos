@@ -6,13 +6,18 @@ const { JSDOM } = require('jsdom');
     // Load HTML and script
     const sistemaHtml = fs.readFileSync('sistema.html','utf8');
     const cadastroHtml = fs.readFileSync('cadastro.html','utf8');
-    const scriptContent = fs.readFileSync('js/scripts.js','utf8');
+  let scriptContent = fs.readFileSync('js/scripts.js','utf8');
+  // make the inlined script safer for repeated evaluation inside JSDOM by
+  // converting top-level `const $ =` / `const $$ =` into `var $ =` / `var $$ =`
+  scriptContent = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
 
     // Helper to run a DOM test
     async function testDom(html, actions){
       // Inline the script into the HTML so it runs during parsing (ensures DOMContentLoaded handlers execute)
-      const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
-  const htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${scriptContent}\n})();</script>`);
+    const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
+  // remove external CSS link to avoid JSDOM trying to fetch http://localhost/css/styles.css
+  const htmlNoCss = html.replace(/<link[^>]*href=(?:"|')css\/styles\.css(?:"|')[^>]*>/i, '');
+  const htmlWithScript = htmlNoCss.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${scriptContent}\n})();</script>`);
 
       const dom = new JSDOM(htmlWithScript, { 
         url: 'http://localhost/',
