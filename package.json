@@ -1,6 +1,23 @@
 {
   "dependencies": {
+    "clean-css": "^5.3.3",
+    "html-minifier-terser": "^7.2.0",
     "jsdom": "^22.1.0",
-    "puppeteer": "^24.27.0"
-  }
+    "puppeteer": "^24.27.0",
+    "sharp": "^0.34.4",
+    "terser": "^5.44.0"
+  },
+  "name": "ong_juntos_por_todos",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
