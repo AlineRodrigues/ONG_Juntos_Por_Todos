@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function(){
   function mask(el, type){
-    el&&el.addEventListener('input', function(e){
+    if(el && typeof el.addEventListener === 'function'){ el.addEventListener('input', function(e){
       let v=e.target.value.replace(/\D/g,'');
       if(type==='cpf'){ v=v.slice(0,11); v=v.replace(/(\d{3})(\d)/,'$1.$2'); v=v.replace(/(\d{3})(\d)/,'$1.$2'); v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2'); }
       if(type==='tel'){ v=v.slice(0,11); if(v.length>10){ v=v.replace(/(\d{2})(\d{5})(\d{4})/,'($1) $2-$3'); } else { v=v.replace(/(\d{2})(\d{4})(\d{0,4})/,'($1) $2-$3'); } }
       if(type==='cep'){ v=v.slice(0,8); v=v.replace(/(\d{5})(\d{1,3})/,'$1-$2'); }
       e.target.value=v;
-    });
+    }); }
   }
   mask(document.getElementById('cpf'),'cpf');
   mask(document.getElementById('telefone'),'tel');
