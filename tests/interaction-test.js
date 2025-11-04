@@ -8,16 +8,16 @@ const fs = require('fs');
   const page = await browser.newPage();
 
   try{
-    // Test 1: sistema.html admin login
+  // Teste 1: login admin em sistema.html
     await page.goto(base + '/sistema.html', {waitUntil:'networkidle2'});
     out.push('opened sistema.html');
     await page.waitForSelector('#adminUser', {timeout:2000});
     await page.type('#adminUser','admin');
     await page.type('#adminPass','admin');
-    // prepare to capture any alert
+  // prepara captura de quaisquer alertas
     page.on('dialog', async dialog => { out.push('dialog: '+dialog.message()); await dialog.accept(); });
     await page.click('#btnAdminLogin');
-    // wait a bit for DOM update
+  // aguarda atualização do DOM
     await page.waitForTimeout(500);
     const adminVisible = await page.evaluate(()=>{
       const a = document.getElementById('adminArea');
@@ -26,14 +26,14 @@ const fs = require('fs');
     });
     out.push('adminArea='+adminVisible);
 
-    // Test 2: cadastro submission
+  // Teste 2: envio do cadastro
     await page.goto(base + '/cadastro.html', {waitUntil:'networkidle2'});
     out.push('opened cadastro.html');
-    // fill fields
+  // preenche campos
     await page.select('#interesse','voluntariado').catch(()=>{});
     await page.type('#nome','Fulano de Tal');
     await page.type('#email','fulano@example.com');
-    await page.type('#cpf','52998224725'); // commonly used test-CNPJ
+  await page.type('#cpf','52998224725'); // CPF de teste comumente usado
     await page.type('#telefone','11987654321');
     await page.evaluate(()=>{ document.getElementById('nascimento').value='1990-01-01'; });
     await page.type('#endereco','Rua Teste, 123');
@@ -42,7 +42,7 @@ const fs = require('fs');
     await page.select('#cidade','São Paulo').catch(()=>{});
     await page.select('#uf','SP').catch(()=>{});
 
-    // handle alert from submit
+  // trata alert do envio
     let sawDialog = false;
     page.on('dialog', async dialog => { sawDialog = true; out.push('dialog on cadastro: '+dialog.message()); await dialog.accept(); });
 

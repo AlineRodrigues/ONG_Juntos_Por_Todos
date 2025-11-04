@@ -179,7 +179,9 @@ function initTabs(){
 }
 
 // inicializa e mantém sincronizado com o hash
-initTabs();
+document.addEventListener('DOMContentLoaded', function(){
+  initTabs();
+});
 window.addEventListener('hashchange', activateFromHash);
 
   // Storage helpers
@@ -294,7 +296,13 @@ window.addEventListener('hashchange', activateFromHash);
     const sd=$('#d-projeto-s'); if(sd) sd.innerHTML=opts;
     const sc=$('#cert-projeto'); if(sc) sc.innerHTML=opts;
   }
-  renderSelects();
+  
+  // Funções que devem executar após DOM carregar
+  function initializeSystem() {
+    renderSelects();
+    renderHistoricoVol();
+    renderMinhasDoacoes();
+  }
 
   const formCand=$('#formCandidatura');
   if(formCand){
@@ -315,7 +323,6 @@ window.addEventListener('hashchange', activateFromHash);
       tb.appendChild(tr);
     });
   }
-  renderHistoricoVol();
 
   const btnCert=$('#btnCertificado');
   if(btnCert){
@@ -351,7 +358,11 @@ window.addEventListener('hashchange', activateFromHash);
     });
     const out=$('#totalDoador'); if(out) out.textContent=total.toLocaleString('pt-BR',{minimumFractionDigits:2});
   }
-  renderMinhasDoacoes();
+  
+  // Chamada da inicialização dentro de DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', function(){
+    initializeSystem();
+  });
 })();
 
 // === Equaliza alturas dos cards entre as duas seções da Home ===

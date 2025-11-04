@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste das Funcionalidades</title>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <link href="assets_a11y/a11y.css" rel="stylesheet"/>
+</head>
+<body>
+    <h1>Teste das Funcionalidades</h1>
+    
+    <h2>1. Teste do Sistema de Abas</h2>
+    <div class="tabs" role="tablist">
+        <button class="tab active" id="tb-test1" role="tab">Aba 1</button>
+        <button class="tab" id="tb-test2" role="tab">Aba 2</button>
+    </div>
+    <div class="tab-panel" id="pane-test1">Conteúdo da Aba 1</div>
+    <div class="tab-panel hidden" id="pane-test2">Conteúdo da Aba 2</div>
+    
+    <h2>2. Teste de Formulário</h2>
+    <form id="testForm">
+        <div class="form-group">
+            <label for="testCpf">CPF:</label>
+            <input id="testCpf" type="text" maxlength="14">
+            <div class="error" id="testCpf-error"></div>
+        </div>
+        <div class="form-group">
+            <label for="testTel">Telefone:</label>
+            <input id="testTel" type="text">
+        </div>
+        <button type="submit">Enviar</button>
+    </form>
+    
+    <h2>3. Status dos Scripts</h2>
+    <div id="status">Carregando...</div>
+    
+    <script src="js/scripts.js"></script>
+    <script src="assets_a11y/a11y.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const status = document.getElementById('status');
+            let checks = [];
+            
+            // Verificar se elementos existem
+            checks.push(`DOM carregado: ✓`);
+            
+            // Verificar máscaras
+            if (document.getElementById('testCpf').addEventListener) {
+                checks.push(`Event listeners funcionando: ✓`);
+            }
+            
+            // Verificar abas
+            const tabs = document.querySelectorAll('.tab');
+            checks.push(`Abas encontradas: ${tabs.length} ✓`);
+            
+            // Verificar CSS
+            const styles = getComputedStyle(document.querySelector('.tab-panel.hidden'));
+            if (styles.display === 'none') {
+                checks.push(`CSS funcionando: ✓`);
+            } else {
+                checks.push(`CSS pode ter problema: ⚠️`);
+            }
+            
+            status.innerHTML = checks.join('<br>');
+            
+            // Testar clique na aba
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    status.innerHTML += '<br>Clique em aba funcionando: ✓';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,553 @@
+
+.skip-link{
+  position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+}
+.skip-link:focus,.skip-link:active{
+  position:static;width:auto;height:auto;margin:8px; padding:8px 12px;
+  border:2px solid currentColor; border-radius:8px; outline:none;
+}
+
+/* Visibilidade de foco */
+:focus{outline:2px solid #2b6cb0; outline-offset:2px;}
+:focus:not(:focus-visible){outline:none;}
+:focus-visible{outline:3px solid #2b6cb0; outline-offset:2px;}
+
+.a11y-toolbar{display:flex;gap:8px;align-items:center;}
+/* Botões na a11y toolbar */
+.a11y-toolbar button{
+  border:2px solid transparent;border-radius:10px;padding:6px 10px;
+  font:inherit;cursor:pointer;
+}
+.a11y-toolbar button:focus-visible{outline:3px solid #2b6cb0;}
+
+/* Tema escuro (acessível e moderno) */
+.theme-dark{
+  color-scheme: dark;
+  /* Fundo geral mais suave */
+  --fundo-pagina: #0a0e17;
+  --fundo-card: #141b26;
+  --fundo-suave: #1a2332;
+  
+  /* Textos com melhor contraste */
+  --texto-principal: #f1f5f9;
+  --texto-secundario: #cbd5e1;
+  --texto-suave: #94a3b8;
+  
+  /* Cores azuis adaptadas para escuro */
+  --azul-primario: #3b82f6;
+  --azul-escuro: #1e40af;
+  --verde-sucesso: #10b981;
+  --vermelho-erro: #ef4444;
+  --laranja-apoio: #f59e0b;
+  
+  /* Bordas e divisões */
+  --borda-clara: #334155;
+  --surface: var(--fundo-card);
+  --color-text-700: var(--texto-secundario);
+  --color-border: var(--borda-clara);
+  
+  /* Sombras adaptadas para escuro */
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
+}
+
+.theme-dark, .theme-dark body{
+  background: var(--fundo-pagina);
+  color: var(--texto-principal);
+}
+
+/* Links com melhor visibilidade */
+.theme-dark a{
+  color: #60a5fa;
+  transition: color 0.2s ease;
+}
+.theme-dark a:hover, .theme-dark a:focus{
+  color: #93c5fd;
+}
+
+/* Cards e superfícies */
+.theme-dark .card,
+.theme-dark .hero,
+.theme-dark .projeto-card,
+.theme-dark .card-project,
+.theme-dark .tab-panel,
+.theme-dark .filtro-form,
+.theme-dark .gallery figure{
+  background: #141b26;
+  border: 1px solid var(--borda-clara);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Header mais elegante */
+.theme-dark .site-header{
+  background: var(--fundo-card);
+  border-bottom: 1px solid var(--borda-clara);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+/* Botões melhorados */
+.theme-dark .btn{
+  background: var(--fundo-suave);
+  color: var(--texto-principal);
+  border: 1px solid var(--borda-clara);
+  transition: all 0.2s ease;
+}
+.theme-dark .btn:hover{
+  background: #2d3748;
+  border-color: #4a5568;
+}
+
+.theme-dark .btn-primary{
+  background: linear-gradient(135deg, var(--azul-primario), var(--azul-escuro));
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+.theme-dark .btn-primary:hover{
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Formulários melhorados */
+.theme-dark input, 
+.theme-dark select, 
+.theme-dark textarea{
+  background: var(--fundo-suave);
+  color: var(--texto-principal);
+  border: 1px solid var(--borda-clara);
+  transition: all 0.2s ease;
+}
+.theme-dark input:focus, 
+.theme-dark select:focus, 
+.theme-dark textarea:focus{
+  background: var(--fundo-card);
+  border-color: var(--azul-primario);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Abas mais elegantes */
+.theme-dark .tab{
+  background: var(--fundo-suave);
+  color: var(--texto-secundario);
+  border: 1px solid var(--borda-clara);
+  transition: all 0.2s ease;
+}
+.theme-dark .tab:hover{
+  background: var(--fundo-card);
+  color: var(--texto-principal);
+}
+.theme-dark .tab.active{
+  background: var(--azul-primario);
+  color: #ffffff;
+  border-color: var(--azul-primario);
+}
+
+/* Tabelas melhoradas */
+.theme-dark .table{
+  background: var(--fundo-card);
+}
+.theme-dark .table th{
+  background: var(--fundo-suave);
+  color: var(--texto-principal);
+  border-bottom: 2px solid var(--borda-clara);
+}
+.theme-dark .table td{
+  border-bottom: 1px solid var(--borda-clara);
+  color: var(--texto-secundario);
+}
+.theme-dark .table tr:hover{
+  background: var(--fundo-suave);
+}
+
+/* Footer mais integrado */
+.theme-dark footer{
+  background: var(--fundo-card);
+  border-top: 1px solid var(--borda-clara);
+}
+
+/* Dropdown melhorado */
+.theme-dark .dropdown-menu{
+  background: var(--fundo-card);
+  border: 1px solid var(--borda-clara);
+  box-shadow: var(--shadow-md);
+}
+.theme-dark .dropdown-menu a:hover{
+  background: var(--fundo-suave);
+  color: var(--azul-primario);
+}
+
+/* Progress bars */
+.theme-dark .progress{
+  background: var(--fundo-suave);
+}
+.theme-dark .progress .bar{
+  background: linear-gradient(90deg, var(--azul-primario), var(--verde-sucesso));
+}
+
+/* Badges adaptados */
+.theme-dark .badge{
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Alertas e estados */
+.theme-dark .alert-success{
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.theme-dark .alert-error{
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.theme-dark .alert-info{
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Toolbar de acessibilidade integrada */
+.theme-dark .a11y-toolbar{
+  background: var(--fundo-suave);
+  border-radius: 8px;
+  padding: 4px;
+}
+.theme-dark .a11y-toolbar button{
+  background: transparent;
+  color: var(--texto-secundario);
+  border: 1px solid transparent;
+}
+.theme-dark .a11y-toolbar button:hover{
+  background: var(--fundo-card);
+  color: var(--texto-principal);
+  border-color: var(--borda-clara);
+}
+.theme-dark .a11y-toolbar button[aria-pressed="true"]{
+  background: var(--azul-primario);
+  color: #ffffff;
+}
+
+/* Fieldsets e legendas */
+.theme-dark fieldset{
+  border-color: var(--borda-clara);
+  background: rgba(255,255,255,0.02);
+}
+.theme-dark legend{
+  color: var(--texto-principal);
+  background: var(--fundo-card);
+  padding: 0 8px;
+}
+
+/* Navegação responsiva */
+.theme-dark .nav-list{
+  background: var(--fundo-card);
+  border-color: var(--borda-clara);
+}
+.theme-dark .nav-list a:hover{
+  background: var(--fundo-suave);
+}
+
+/* Estados de formulário */
+.theme-dark .form-control.is-error{
+  border-color: var(--vermelho-erro);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+.theme-dark .form-control.is-valid{
+  border-color: var(--verde-sucesso);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+.theme-dark .form-error-text{
+  color: #fca5a5;
+}
+
+/* Skip link melhorado */
+.theme-dark .skip-link:focus,
+.theme-dark .skip-link:active{
+  background: var(--fundo-card);
+  color: var(--texto-principal);
+  border-color: var(--azul-primario);
+  box-shadow: var(--shadow-md);
+}
+
+/* Melhor foco para elementos interativos */
+.theme-dark :focus-visible{
+  outline: 3px solid var(--azul-primario);
+  outline-offset: 2px;
+}
+
+/* Tema de alto contraste (máxima acessibilidade) */
+.theme-hc{
+  color-scheme: light;
+  /* Cores com contraste máximo (21:1) */
+  --hc-bg: #ffffff;
+  --hc-text: #000000;
+  --hc-link: #0000ee;        /* Azul forte padrão web */
+  --hc-link-visited: #551a8b; /* Roxo forte para links visitados */
+  --hc-btn-bg: #000000;
+  --hc-btn-text: #ffffff;
+  --hc-btn-secondary: #ffffff;
+  --hc-btn-secondary-text: #000000;
+  --hc-border: #000000;
+  --hc-focus: #ff0000;       /* Vermelho forte para foco */
+  --hc-success: #006600;     /* Verde escuro */
+  --hc-error: #cc0000;       /* Vermelho escuro */
+  --hc-warning: #ff6600;     /* Laranja forte */
+}
+
+.theme-hc, .theme-hc body{
+  background: var(--hc-bg);
+  color: var(--hc-text);
+  font-weight: 500; /* Texto mais espesso para melhor legibilidade */
+}
+
+/* Links com máximo contraste */
+.theme-hc a{
+  color: var(--hc-link);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  font-weight: 600;
+}
+.theme-hc a:visited{
+  color: var(--hc-link-visited);
+}
+.theme-hc a:hover, .theme-hc a:focus{
+  background: #ffff00; /* Fundo amarelo para hover/foco */
+  color: #000000;
+  outline: 3px solid var(--hc-focus);
+}
+
+/* Cards e superfícies com bordas fortes */
+.theme-hc .card,
+.theme-hc .hero,
+.theme-hc .projeto-card,
+.theme-hc .card-project,
+.theme-hc .tab-panel,
+.theme-hc .filtro-form,
+.theme-hc .gallery figure{
+  background: var(--hc-bg);
+  border: 3px solid var(--hc-border);
+  box-shadow: none; /* Remove sombras para clareza */
+}
+
+/* Header com separação clara */
+.theme-hc .site-header{
+  background: var(--hc-bg);
+  border-bottom: 4px solid var(--hc-border);
+  box-shadow: none;
+}
+
+/* Botões com máximo contraste */
+.theme-hc .btn{
+  background: var(--hc-btn-secondary);
+  color: var(--hc-btn-secondary-text);
+  border: 3px solid var(--hc-border);
+  font-weight: 700;
+  text-decoration: none;
+}
+.theme-hc .btn:hover, .theme-hc .btn:focus{
+  background: #ffff00;
+  color: #000000;
+  outline: 3px solid var(--hc-focus);
+}
+
+.theme-hc .btn-primary{
+  background: var(--hc-btn-bg);
+  color: var(--hc-btn-text);
+  border: 3px solid var(--hc-border);
+}
+.theme-hc .btn-primary:hover, .theme-hc .btn-primary:focus{
+  background: #333333;
+  outline: 3px solid var(--hc-focus);
+}
+
+/* Formulários com bordas grossas */
+.theme-hc input, 
+.theme-hc select, 
+.theme-hc textarea{
+  background: var(--hc-bg);
+  color: var(--hc-text);
+  border: 3px solid var(--hc-border);
+  font-weight: 500;
+}
+.theme-hc input:focus, 
+.theme-hc select:focus, 
+.theme-hc textarea:focus{
+  outline: 4px solid var(--hc-focus);
+  background: #fffacd; /* Fundo creme claro para foco */
+}
+
+/* Estados de validação claros */
+.theme-hc .form-control.is-error{
+  border-color: var(--hc-error);
+  background: #ffe6e6;
+}
+.theme-hc .form-control.is-valid{
+  border-color: var(--hc-success);
+  background: #e6ffe6;
+}
+.theme-hc .form-error-text{
+  color: var(--hc-error);
+  font-weight: 700;
+}
+
+/* Abas com separação clara */
+.theme-hc .tab{
+  background: var(--hc-btn-secondary);
+  color: var(--hc-btn-secondary-text);
+  border: 3px solid var(--hc-border);
+  font-weight: 700;
+}
+.theme-hc .tab:hover{
+  background: #f0f0f0;
+}
+.theme-hc .tab.active{
+  background: var(--hc-btn-bg);
+  color: var(--hc-btn-text);
+  border-width: 4px;
+}
+
+/* Tabelas com grade forte */
+.theme-hc .table{
+  background: var(--hc-bg);
+  border: 3px solid var(--hc-border);
+}
+.theme-hc .table th{
+  background: #f5f5f5;
+  color: var(--hc-text);
+  border: 2px solid var(--hc-border);
+  font-weight: 700;
+}
+.theme-hc .table td{
+  border: 1px solid var(--hc-border);
+  color: var(--hc-text);
+  font-weight: 500;
+}
+.theme-hc .table tr:hover{
+  background: #f9f9f9;
+}
+
+/* Footer com separação */
+.theme-hc footer{
+  background: var(--hc-bg);
+  border-top: 4px solid var(--hc-border);
+  font-weight: 600;
+}
+
+/* Dropdown com bordas fortes */
+.theme-hc .dropdown-menu{
+  background: var(--hc-bg);
+  border: 3px solid var(--hc-border);
+  box-shadow: none;
+}
+.theme-hc .dropdown-menu a{
+  font-weight: 600;
+}
+.theme-hc .dropdown-menu a:hover{
+  background: #ffff00;
+  color: #000000;
+}
+
+/* Progress bars contrastantes */
+.theme-hc .progress{
+  background: #e0e0e0;
+  border: 2px solid var(--hc-border);
+}
+.theme-hc .progress .bar{
+  background: var(--hc-success);
+}
+
+/* Badges com bordas */
+.theme-hc .badge{
+  border: 2px solid var(--hc-border);
+  font-weight: 700;
+}
+.theme-hc .badge-educacao{
+  background: #000080;
+  color: #ffffff;
+}
+.theme-hc .badge-saude{
+  background: var(--hc-success);
+  color: #ffffff;
+}
+.theme-hc .badge-capacitacao{
+  background: #ff6600;
+  color: #ffffff;
+}
+
+/* Alertas com máximo contraste */
+.theme-hc .alert{
+  border: 3px solid;
+  font-weight: 600;
+}
+.theme-hc .alert-success{
+  background: #e6ffe6;
+  color: var(--hc-success);
+  border-color: var(--hc-success);
+}
+.theme-hc .alert-error{
+  background: #ffe6e6;
+  color: var(--hc-error);
+  border-color: var(--hc-error);
+}
+.theme-hc .alert-info{
+  background: #e6f3ff;
+  color: #000080;
+  border-color: #000080;
+}
+
+/* Toolbar de acessibilidade destacada */
+.theme-hc .a11y-toolbar{
+  background: #f0f0f0;
+  border: 3px solid var(--hc-border);
+  border-radius: 0;
+}
+.theme-hc .a11y-toolbar button{
+  background: var(--hc-btn-secondary);
+  color: var(--hc-btn-secondary-text);
+  border: 2px solid var(--hc-border);
+  font-weight: 700;
+}
+.theme-hc .a11y-toolbar button:hover{
+  background: #ffff00;
+  color: #000000;
+}
+.theme-hc .a11y-toolbar button[aria-pressed="true"]{
+  background: var(--hc-btn-bg);
+  color: var(--hc-btn-text);
+  border-width: 3px;
+}
+
+/* Fieldsets com bordas grossas */
+.theme-hc fieldset{
+  border: 3px solid var(--hc-border);
+  background: transparent;
+}
+.theme-hc legend{
+  color: var(--hc-text);
+  background: var(--hc-bg);
+  font-weight: 700;
+  border: 2px solid var(--hc-border);
+  padding: 4px 8px;
+}
+
+/* Skip link super visível */
+.theme-hc .skip-link:focus,
+.theme-hc .skip-link:active{
+  background: #ffff00;
+  color: #000000;
+  border: 4px solid var(--hc-focus);
+  font-weight: 700;
+  box-shadow: none;
+}
+
+/* Foco ultra visível */
+.theme-hc :focus-visible{
+  outline: 4px solid var(--hc-focus);
+  outline-offset: 2px;
+  background: #fffacd;
+}
+
+/* Utilitário para garantir contraste de texto sem quebrar o layout */
+.force-text-contrast{color:#111 !important;}
+.force-bg-contrast{background:#fff !important; color:#111 !important;}
