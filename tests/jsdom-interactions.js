@@ -10,17 +10,17 @@ const { JSDOM } = require('jsdom');
 
     // Auxiliar para executar um teste DOM
     async function testDom(html, actions){
-      // Inclui o script no HTML para que execute durante o parse (garante execução dos handlers de DOMContentLoaded)
-      const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
+  // Inclui o script no HTML para que execute durante o parse (garante execução dos handlers de DOMContentLoaded)
+  const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
   const htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${scriptContent}\n})();</script>`);
 
       const dom = new JSDOM(htmlWithScript, { 
         url: 'http://localhost/',
         runScripts: 'dangerously', 
         resources: 'usable',
-        beforeParse(win){
-    // fornece localStorage simples e alert como fallback (o script também os define)
-          const store = Object.create(null);
+    beforeParse(win){
+  // fornece localStorage simples e alert como fallback (o script também os define)
+      const store = Object.create(null);
           win.localStorage = {
             getItem(key){ return Object.prototype.hasOwnProperty.call(store,key)?store[key]:null; },
             setItem(key,val){ store[key]=String(val); },
@@ -32,8 +32,8 @@ const { JSDOM } = require('jsdom');
       });
       const { window } = dom;
       // expõe console para capturar logs
-      window.console = console;
-      // aguarda brevemente para que scripts rodem e listeners sejam anexados
+  window.console = console;
+  // aguarda brevemente para que scripts rodem e listeners sejam anexados
       await new Promise(r=>setTimeout(r,120));
       // executa as ações
       return await actions(window, dom);

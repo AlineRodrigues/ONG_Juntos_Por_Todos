@@ -7,13 +7,13 @@ const { JSDOM } = require('jsdom');
     const html = fs.readFileSync(htmlPath,'utf8');
     const scriptContent = fs.readFileSync('js/scripts.js','utf8');
 
-    const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
+    const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
   // torna o script inline mais seguro para reavaliação no JSDOM
   // convertendo declarações top-level `const $ =` / `const $$ =` para `var $ =` / `var $$ =`
-    const safeScript = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
+    let safeScript = scriptContent.replace(/const\s+\$\s*=\s*/g, 'var $ =').replace(/const\s+\$\$\s*=\s*/g, 'var $$ =');
   // protege contra scripts que chamem addEventListener em não-elementos no ambiente JSDOM
     try{
-  const guardRegex = /if\s*\(\s*btnLogin\s*\)\s*\{\s*btnLogin\.addEventListener\(/g;
+      const guardRegex = /if\s*\(\s*btnLogin\s*\)\s*\{\s*btnLogin\.addEventListener\(/g;
       if(guardRegex.test(safeScript)){
         safeScript = safeScript.replace(guardRegex, "if(btnLogin && typeof btnLogin.addEventListener === 'function'){ btnLogin.addEventListener(");
       }
