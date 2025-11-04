@@ -4,6 +4,8 @@ node_modules/
 # build artifacts  
 build_v2*.zip
 releases/*/build_*.zip
+build-*.zip
+build_*.zip
 
 # Build outputs (production)
 dist/
