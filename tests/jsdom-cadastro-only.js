@@ -21,8 +21,8 @@ const { JSDOM } = require('jsdom');
   });
 })();
 `;
-    // remove external CSS/script tags to avoid network fetches
-    const htmlClean = html.replace(/<link[^>]*href=(?:"|')css\/styles\.css(?:"|')[^>]*>/i, '').replace(/<script[^>]*src=(?:"|')js\/scripts\.js(?:"|')[^>]*>\s*<\/script>/i, '');
+  // remove tags externas de CSS/script para evitar requisições de rede
+  const htmlClean = html.replace(/<link[^>]*href=(?:"|')css\/styles\.css(?:"|')[^>]*>/i, '').replace(/<script[^>]*src=(?:"|')js\/scripts\.js(?:"|')[^>]*>\s*<\/script>/i, '');
     const htmlWith = htmlClean.replace(/<\/body>/i, `<script>${handler}</script>\n</body>`);
 
     const dom = new JSDOM(htmlWith, { url: 'http://localhost/', runScripts: 'dangerously', resources:'usable', beforeParse(win){
