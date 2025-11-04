@@ -8,10 +8,10 @@ const { JSDOM } = require('jsdom');
     const scriptContent = fs.readFileSync('js/scripts.js','utf8');
 
     const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
-    // make the inlined script safer for repeated evaluation inside JSDOM by
-    // converting top-level `const $ =` / `const $$ =` into `var $ =` / `var $$ =`
+  // torna o script inline mais seguro para reavaliação no JSDOM
+  // convertendo declarações top-level `const $ =` / `const $$ =` para `var $ =` / `var $$ =`
     const safeScript = scriptContent.replace(/const\s+\$\s*=/g, 'var $ =').replace(/const\s+\$\$\s*=/g, 'var $$ =');
-    // guard against scripts that call addEventListener on non-elements in the JSDOM environment
+  // protege contra scripts que chamem addEventListener em não-elementos no ambiente JSDOM
     try{
   const guardRegex = /if\s*\(\s*btnLogin\s*\)\s*\{\s*btnLogin\.addEventListener\(/g;
       if(guardRegex.test(safeScript)){
@@ -19,7 +19,7 @@ const { JSDOM } = require('jsdom');
       }
     }catch(e){ /* ignore - defensive */ }
     let htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${safeScript}\n})();</script>`);
-    // remove external CSS link to avoid JSDOM trying to fetch http://localhost/css/styles.css
+  // remove link CSS externo para evitar que o JSDOM tente buscar http://localhost/css/styles.css
     htmlWithScript = htmlWithScript.replace(/<link[^>]*href=(?:"|')css\/styles\.css(?:"|')[^>]*>/i, '');
 
     const dom = new JSDOM(htmlWithScript, { url: 'http://localhost/', runScripts:'dangerously', resources:'usable', beforeParse(win){
@@ -35,11 +35,11 @@ const { JSDOM } = require('jsdom');
 
     const { window } = dom;
     window.console = console;
-    // wait a bit for scripts to run
-    await new Promise(r=>setTimeout(r,150));
+  // aguarda brevemente para execução dos scripts
+  await new Promise(r=>setTimeout(r,150));
 
     const doc = window.document;
-    // Detect and run appropriate test
+  // Detecta e executa o teste apropriado
     if(doc.getElementById('adminUser')){
       const adminUser = doc.getElementById('adminUser');
       const adminPass = doc.getElementById('adminPass');

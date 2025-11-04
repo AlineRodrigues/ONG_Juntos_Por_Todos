@@ -1,14 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JuntosPorTodos - SPA</title>
-
-  <!-- CSS agora fica em ./css -->
-  <link rel="stylesheet" href="./css/styles.css">
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>JuntosPorTodos - SPA</title>
+<!-- CSS agora fica em ./css -->
+<link href="./css/styles.css" rel="stylesheet"/>
+<style>
     .spa-btn {
       display: inline-block;
       padding: 8px 12px;
@@ -20,42 +19,36 @@
       font-size: var(--spa-font-sm);
     }
   </style>
-</head>
-<body class="spa-root">
-  <header class="spa-header">
-    <div class="spa-container">
-      <div class="spa-brand">
-        <img src="../logo.png" alt="Logo" onerror="this.style.display='none'">
-        <div>
-          <strong>JuntosPorTodos</strong><br>
-          <span style="font-size: var(--spa-font-sm); color: var(--spa-neutral-600);">Versão SPA básica</span>
-        </div>
-      </div>
-
-      <nav class="spa-nav" aria-label="Navegação principal">
-        <a href="#/home" class="active">Início</a>
-        <a href="#/cadastro">Cadastro</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="app" role="main" class="spa-main"></main>
-
-  <footer class="spa-footer">
-    <div class="spa-container">
+<link href="../assets_a11y/a11y.css" rel="stylesheet"/></head>
+<body class="spa-root"><a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="spa-header" role="banner"><div aria-label="Acessibilidade" class="a11y-toolbar" role="group"><button aria-label="Ativar modo escuro" aria-pressed="false" id="btn-theme-dark" type="button">🌙 Modo escuro</button><button aria-label="Ativar modo alto contraste" aria-pressed="false" id="btn-theme-hc" type="button">♿ Alto contraste</button><button aria-label="Restaurar tema padrão" aria-pressed="true" id="btn-theme-reset" type="button">🔆 Padrão</button></div>
+<div class="spa-container">
+<div class="spa-brand">
+<img alt="Logo" onerror="this.style.display='none'" src="../logo.png"/>
+<div>
+<strong>JuntosPorTodos</strong><br/>
+<span style="font-size: var(--spa-font-sm); color: var(--spa-neutral-600);">Versão SPA básica</span>
+</div>
+</div>
+<nav aria-label="Navegação principal" class="spa-nav" role="navigation">
+<a class="active" href="#/home">Início</a>
+<a href="#/cadastro">Cadastro</a>
+</nav>
+</div>
+</header>
+<main class="spa-main" id="app" role="main"></main>
+<footer class="spa-footer" role="contentinfo">
+<div class="spa-container">
       © <span id="year"></span> JuntosPorTodos — SPA de exemplo.
       <span style="float:right;">Use com um servidor local (ex.: Live Server).</span>
-    </div>
-  </footer>
-
-  <script>
+</div>
+</footer>
+<script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-
-  <!-- Biblioteca externa usada na validação/máscara -->
-  <script src="https://unpkg.com/imask"></script>
-
-  <!-- Ponto de entrada da SPA. app.js importa os outros módulos. -->
-  <script type="module" src="./js/app.js"></script>
-</body>
+<!-- Biblioteca externa usada na validação/máscara -->
+<script src="https://unpkg.com/imask"></script>
+<!-- Ponto de entrada da SPA. app.js importa os outros módulos. -->
+<script src="./js/app.js" type="module"></script>
+<script defer="True" src="../assets_a11y/a11y.js"></script><script>console.log('Acessibilidade carregada com sucesso');</script></body>
 </html>

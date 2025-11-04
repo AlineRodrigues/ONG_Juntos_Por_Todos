@@ -3,14 +3,14 @@ const { JSDOM } = require('jsdom');
 (async ()=>{
   const results = [];
   try{
-    // Load HTML and script
+  // Carrega HTML e script
     const sistemaHtml = fs.readFileSync('sistema.html','utf8');
     const cadastroHtml = fs.readFileSync('cadastro.html','utf8');
     const scriptContent = fs.readFileSync('js/scripts.js','utf8');
 
-    // Helper to run a DOM test
+    // Auxiliar para executar um teste DOM
     async function testDom(html, actions){
-      // Inline the script into the HTML so it runs during parsing (ensures DOMContentLoaded handlers execute)
+      // Inclui o script no HTML para que execute durante o parse (garante execução dos handlers de DOMContentLoaded)
       const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
   const htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${scriptContent}\n})();</script>`);
 
@@ -19,7 +19,7 @@ const { JSDOM } = require('jsdom');
         runScripts: 'dangerously', 
         resources: 'usable',
         beforeParse(win){
-          // provide simple window.localStorage and alert as a fallback (script will also define them)
+    // fornece localStorage simples e alert como fallback (o script também os define)
           const store = Object.create(null);
           win.localStorage = {
             getItem(key){ return Object.prototype.hasOwnProperty.call(store,key)?store[key]:null; },
@@ -31,15 +31,15 @@ const { JSDOM } = require('jsdom');
         }
       });
       const { window } = dom;
-      // expose console to capture logs
+      // expõe console para capturar logs
       window.console = console;
-      // wait briefly for scripts to run and event listeners to attach
+      // aguarda brevemente para que scripts rodem e listeners sejam anexados
       await new Promise(r=>setTimeout(r,120));
-      // run actions
+      // executa as ações
       return await actions(window, dom);
     }
 
-    // Test admin login on sistema.html
+  // Teste: login admin em sistema.html
     const adminRes = await testDom(sistemaHtml, async (window, dom)=>{
       const doc = window.document;
       const adminUser = doc.getElementById('adminUser');
@@ -48,21 +48,21 @@ const { JSDOM } = require('jsdom');
       const adminArea = doc.getElementById('adminArea');
       if(!btn) return {ok:false, reason:'btnAdminLogin not found'};
       adminUser.value='admin'; adminPass.value='admin';
-      // dispatch click
-      btn.dispatchEvent(new window.Event('click'));
-      // wait
-      await new Promise(r=>setTimeout(r,50));
+  // dispara clique
+  btn.dispatchEvent(new window.Event('click'));
+  // aguarda
+  await new Promise(r=>setTimeout(r,50));
       const visible = adminArea && !adminArea.classList.contains('hidden');
       return {ok: !!visible, adminAreaClass: adminArea ? adminArea.className : null};
     });
     results.push({test:'adminLogin', result: adminRes});
 
-    // Test cadastro submission on cadastro.html
+  // Teste: envio de cadastro em cadastro.html
     const cadRes = await testDom(cadastroHtml, async (window, dom)=>{
       const doc = window.document; const local = window.localStorage;
       const form = doc.getElementById('cadastroForm');
       if(!form) return {ok:false, reason:'cadastroForm not found'};
-      // fill required fields
+  // preenche campos obrigatórios
       const set = (id,val)=>{ const el=doc.getElementById(id); if(el) el.value=val; };
       set('interesse','voluntariado');
       set('nome','Fulano de Tal');
@@ -75,11 +75,11 @@ const { JSDOM } = require('jsdom');
       set('cep','12345678');
       set('cidade','São Paulo');
       set('uf','SP');
-      // dispatch submit
-      form.dispatchEvent(new window.Event('submit', {bubbles:true, cancelable:true}));
+  // dispara submit
+  form.dispatchEvent(new window.Event('submit', {bubbles:true, cancelable:true}));
       await new Promise(r=>setTimeout(r,50));
       const stored = local.getItem('cadastro_jpt');
-      // collect any error messages present in the form
+  // coleta quaisquer mensagens de erro presentes no formulário
       const errors = Array.from(doc.querySelectorAll('.error')).map(e=>e.textContent.trim()).filter(Boolean);
       const cpfValid = (doc.getElementById('cpf')||{}).dataset && (doc.getElementById('cpf')||{}).dataset.valid || null;
       return {ok: !!stored, storedSample: stored ? stored.slice(0,200) : null, errors, cpfValid};
