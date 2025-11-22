@@ -48,6 +48,9 @@ async function buildImages() {
             }),
             
             // SVG com otimizações agressivas mas seguras
+            // Configuração SVGO simplificada: manter apenas overrides seguros
+            // e plugins adicionais explicitamente necessários. Isso evita warnings
+            // quando a versão do SVGO não reconhece chaves extras dentro do preset.
             imageminSvgo({
                 plugins: [
                     {
@@ -58,22 +61,6 @@ async function buildImages() {
                                 removeViewBox: false,
                                 // Preserva IDs que podem ser usados por CSS/JS
                                 cleanupIDs: false,
-                                // Remove metadados desnecessários
-                                removeMetadata: true,
-                                // Remove comentários
-                                removeComments: true,
-                                // Remove atributos vazios
-                                removeEmptyAttrs: true,
-                                // Remove elementos vazios
-                                removeEmptyContainers: true,
-                                // Remove espaços desnecessários
-                                removeEmptyText: true,
-                                // Minifica estilos inline
-                                minifyStyles: true,
-                                // Remove doctype desnecessário
-                                removeDoctype: true,
-                                // Remove instruções de processamento XML
-                                removeXMLProcInst: true,
                             },
                         },
                     },

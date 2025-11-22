@@ -12,7 +12,7 @@ const { JSDOM } = require('jsdom');
     async function testDom(html, actions){
   // Inclui o script no HTML para que execute durante o parse (garante execução dos handlers de DOMContentLoaded)
   const pre = `window.localStorage = (function(){const _s={};return {getItem:function(k){return Object.prototype.hasOwnProperty.call(_s,k)?_s[k]:null;},setItem:function(k,v){_s[k]=String(v);},removeItem:function(k){delete _s[k];},clear:function(){for(const k in _s) delete _s[k];}}})(); window.alert=function(msg){};`;
-  const htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${scriptContent}\n})();</script>`);
+  const htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\ntry{\n${scriptContent}\n}catch(e){ console.error('TEST-HARNESS_SCRIPT_ERROR', e); }\n})();</script>`);
 
       const dom = new JSDOM(htmlWithScript, { 
         url: 'http://localhost/',

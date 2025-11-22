@@ -18,7 +18,7 @@ const { JSDOM } = require('jsdom');
         safeScript = safeScript.replace(guardRegex, "if(btnLogin && typeof btnLogin.addEventListener === 'function'){ btnLogin.addEventListener(");
       }
     }catch(e){ /* ignore - defensive */ }
-    let htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\n${safeScript}\n})();</script>`);
+  let htmlWithScript = html.replace(/<script\s+src="js\/scripts\.js"\s*><\/script>/i, `<script>(function(){ ${pre}\ntry{\n${safeScript}\n}catch(e){ console.error('TEST-HARNESS_SCRIPT_ERROR', e); }\n})();</script>`);
   // remove link CSS externo para evitar que o JSDOM tente buscar http://localhost/css/styles.css
     htmlWithScript = htmlWithScript.replace(/<link[^>]*href=(?:"|')css\/styles\.css(?:"|')[^>]*>/i, '');
 
